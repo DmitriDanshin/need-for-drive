@@ -1,10 +1,23 @@
 <template>
   <section class="main">
+    <div v-if="isMenuOpen" class="menu__bg"></div>
     <div class="menu">
+
       <div @click="isMenuOpen = !isMenuOpen" class="menu__hamburger" :class="{'menu__hamburger-active' : isMenuOpen}">
         <span></span>
       </div>
       <div class="menu__lang">Eng</div>
+      <div :class="{'menu__hidden': !isMenuOpen}" class="menu__full">
+
+        <div class="menu__items">
+          <ul>
+            <li class="menu__item">ПАРКОВКА</li>
+            <li class="menu__item active">СТРАХОВКА</li>
+            <li class="menu__item">БЕНЗИН</li>
+            <li class="menu__item">ОБСЛУЖИВАНИЕ</li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="intro">
       <div class="intro__top">
@@ -67,12 +80,74 @@ export default {
 }
 
 .menu {
-
+  width: 64px;
   background: $menu-color;
+  position: relative;
+  z-index: 3;
+
+  &__bg {
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    animation: fade-in 2s;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    background: rgba(21, 27, 31, 0.81);
+  }
+
+  &__items {
+    margin-top: 307px;
+    margin-left: 128px;
+
+    ul {
+      list-style-type: none;
+    }
+
+  }
+
+  &__item {
+    font-family: Roboto, serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+    text-align: left;
+    color: #FFF;
+
+    & + .active {
+      color: $main-accent;
+    }
+  }
+
+  &__full {
+    top: 0;
+    left: 0;
+    position: absolute;
+
+    background: $menu-color;
+    width: 1500%;
+    height: 100%;
+    transition: 1s ease-in-out;
+
+  }
+
+  &__hidden {
+    transition: 1s ease-in-out;
+    left: -1500%;
+  }
+
 
   &__lang {
 
-    position: fixed;
+    position: absolute;
     width: 23px;
     height: 16px;
     bottom: 36px;
@@ -93,13 +168,13 @@ export default {
   &__hamburger {
     display: flex;
     align-items: center;
-    position: fixed;
+    position: absolute;
     top: 20px;
     left: 20px;
     width: 24px;
     height: 32px;
     cursor: pointer;
-    z-index: 1;
+    z-index: 3;
 
     & > span, > span::before, > span::after {
       transition-duration: .25s;
