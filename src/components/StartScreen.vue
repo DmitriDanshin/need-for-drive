@@ -1,9 +1,7 @@
 <template>
-  <section>
+  <section class="main">
     <div class="menu">
-      <div @click="openMenu()" class="menu__hamburger">
-        <span></span>
-        <span></span>
+      <div @click="isMenuOpen = !isMenuOpen" class="menu__hamburger" :class="{'menu__hamburger-active' : isMenuOpen}">
         <span></span>
       </div>
       <div class="menu__lang">Eng</div>
@@ -31,11 +29,9 @@
         <h3 class="title fz-26 intro__center__title">Поминутная аренда авто твоего города</h3>
         <button class="intro__btn">Забронировать</button>
       </div>
-      <div class="intro__bottom__wrapper">
-        <div class="intro__bottom">
-          <div class="intro__copyright">&#169; 2016-2019 «Need for drive»</div>
-          <div class="intro__phone">8 (495) 234-22-44</div>
-        </div>
+      <div class="intro__bottom">
+        <div class="intro__copyright">© 2016-2019 «Need for drive»</div>
+        <div class="intro__phone">8 (495) 234-22-44</div>
       </div>
     </div>
     <div class="carousel"></div>
@@ -64,22 +60,23 @@ export default {
 @import "../scss/helpers";
 @import "../scss/fonts";
 
+.main {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 64px 1fr 1fr;
+}
+
 .menu {
-  position: absolute;
-  width: 64px;
-  height: 100%;
-  left: 0;
-  top: 0;
+
   background: $menu-color;
 
   &__lang {
 
-    position: absolute;
+    position: fixed;
     width: 23px;
     height: 16px;
     bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 21px;
 
     font-family: Roboto, serif;
     font-style: normal;
@@ -105,6 +102,7 @@ export default {
     z-index: 1;
 
     & > span, > span::before, > span::after {
+      transition-duration: .25s;
       display: block;
       position: absolute;
       width: 100%;
@@ -122,20 +120,42 @@ export default {
       content: '';
       top: 8px;
     }
+
+    &-active {
+      & > span {
+        transform: rotate(45deg);
+      }
+
+      & > span::before {
+        top: 0;
+        transform: rotate(0);
+      }
+
+      & > span::after {
+        top: 0;
+        transform: rotate(90deg);
+      }
+
+      & {
+        visibility: visible;
+
+        left: 20px;
+      }
+    }
   }
 }
 
 .intro {
-  height: 100%;
+  padding: 32px 64px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   &__btn {
+
     height: 48px;
     width: 250px;
-
     border-radius: 8px;
-
     font-family: Roboto, serif;
     font-style: normal;
     font-weight: 500;
@@ -147,14 +167,13 @@ export default {
 
     background: linear-gradient(90deg, #0EC261 2.61%, #039F67 112.6%);
     background-blend-mode: darken;
-
+    margin-top: 60px;
     border: none;
   }
 
   &__top {
     display: flex;
-    margin-right: 688px;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
   }
 
@@ -177,87 +196,55 @@ export default {
       font-weight: normal;
       font-size: 14px;
       line-height: 16px;
-
       color: $gray;
     }
   }
 
   &__bottom {
-
-
-    &__wrapper {
-
-      position: absolute;
-      bottom: 36px;
-      left: 64px;
-    }
-
     display: flex;
-    margin-left: 64px;
-    margin-right: 688px;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
   }
 
   &__copyright {
-
     font-family: Roboto, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 13px;
     line-height: 15px;
-    /* identical to box height */
-
-    /* Gray */
     color: #999999;
-
-
   }
 
   &__phone {
-
     font-family: Roboto, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 13px;
-    line-height: 15px;
-    margin-left: 284px;
     color: #121212;
   }
 
   &__center {
-
-    margin-top: 100px;
     display: flex;
-    margin-left: 128px;
-    margin-right: 688px;
     flex-direction: column;
 
     &__title + h1 {
       color: $main-accent;
       margin-top: 4px;
-      margin-bottom: 0;
     }
 
-
     &__title + h3 {
+      margin-top: 34px;
       font-style: normal;
       font-weight: 300;
       font-size: 26px;
       line-height: 30px;
       color: $gray;
-      margin-top: 34px;
     }
   }
-
 }
 
 .carousel {
-  position: absolute;
-  width: 688px;
   height: 100%;
-  right: 0;
-  bottom: 0;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
   mix-blend-mode: normal;
 
