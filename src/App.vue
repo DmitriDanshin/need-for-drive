@@ -15,11 +15,13 @@ export default {
 </script>
 
 <style>
-#app {
-  height: 100%;
+
+html {
+  height: 100%
 }
 
 body {
+  overflow: hidden;
 
   margin: 0;
   padding: 0;
