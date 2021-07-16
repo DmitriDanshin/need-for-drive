@@ -6,7 +6,7 @@
       <div @click="isMenuOpen = !isMenuOpen" class="menu__hamburger" :class="{'menu__hamburger-active' : isMenuOpen}">
         <span></span>
       </div>
-      <div class="menu__lang">
+      <div class="menu__lang" :class="{'menu__lang-hidden': !isMenuOpen}">
         <div content="menu__lang__round">Eng</div>
       </div>
       <div :class="{'menu__hidden': !isMenuOpen}" class="menu__full">
@@ -142,6 +142,11 @@ export default {
   background: $menu-color;
   position: relative;
   z-index: 4;
+  display: flex;
+  padding: 36px 0;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 
   &__bg {
 
@@ -172,7 +177,6 @@ export default {
       list-style-type: none;
       padding: 0;
     }
-
   }
 
   &__item {
@@ -210,12 +214,6 @@ export default {
 
     cursor: pointer;
 
-    position: absolute;
-    width: 23px;
-    height: 16px;
-    bottom: 36px;
-    left: 21px;
-
     font-family: Roboto, serif;
     font-style: normal;
     font-weight: bold;
@@ -233,19 +231,17 @@ export default {
   &__hamburger {
     display: flex;
     align-items: center;
-    position: fixed;
-    top: 20px;
-    left: 20px;
+
     width: 24px;
     height: 32px;
     cursor: pointer;
     z-index: 3;
 
     & > span, > span::before, > span::after {
+      width: 24px;
       transition-duration: .25s;
       display: block;
       position: absolute;
-      width: 100%;
       height: 0.2rem;
       background-color: #ffffff;
       border-radius: 2rem;
@@ -538,6 +534,7 @@ export default {
 
   .intro {
     height: 100vh;
+    justify-content: space-around;
 
     &:before {
       content: '';
@@ -545,9 +542,9 @@ export default {
       bottom: 0;
       right: 0;
       position: absolute;
-      height: 15%;
+      height: 12%;
       z-index: 0;
-      background-color: $black;
+      background-color: $menu-color;
     }
 
     &__top {
@@ -559,14 +556,18 @@ export default {
   }
 
   .menu {
-    width: 0;
+    background-color: rgba(0, 0, 0, 0);
     height: 100vh;
     position: fixed;
 
     &__lang {
-      position: absolute;
-      z-index: 2;
-      bottom: 10%;
+      z-index: 3;
+      position: fixed;
+      bottom: 28px;
+
+      &-hidden {
+        visibility: hidden;
+      }
     }
 
     &__items {
@@ -588,8 +589,7 @@ export default {
           background-color: #FFF;
         }
       }
-      top: 6%;
-      left: 20px;
+
     }
 
     &__hidden {
@@ -607,6 +607,7 @@ export default {
   }
 
   .intro {
+    width: 100%;
     padding: 0;
     justify-content: start;
 
