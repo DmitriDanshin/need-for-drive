@@ -6,7 +6,9 @@
       <div @click="isMenuOpen = !isMenuOpen" class="menu__hamburger" :class="{'menu__hamburger-active' : isMenuOpen}">
         <span></span>
       </div>
-      <div class="menu__lang">Eng</div>
+      <div class="menu__lang">
+        <div content="menu__lang__round">Eng</div>
+      </div>
       <div :class="{'menu__hidden': !isMenuOpen}" class="menu__full">
         <div class="menu__items">
           <ul>
@@ -128,6 +130,8 @@ export default {
 @import "../scss/fonts";
 
 .main {
+  position: fixed;
+  width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 64px 1fr 1fr;
@@ -204,6 +208,8 @@ export default {
 
   &__lang {
 
+    cursor: pointer;
+
     position: absolute;
     width: 23px;
     height: 16px;
@@ -215,6 +221,8 @@ export default {
     font-weight: bold;
     font-size: 13px;
     line-height: 15px;
+
+    text-align: center;
 
     color: $main-accent;
 
@@ -357,6 +365,7 @@ export default {
 
     &:hover {
       color: $main-accent;
+
     }
   }
 
@@ -407,7 +416,7 @@ export default {
 .carousel {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
 
   &__slides {
     height: 100%;
@@ -440,7 +449,6 @@ export default {
     display: none;
 
     &__wrapper {
-
       position: absolute;
       display: flex;
       justify-content: center;
@@ -462,17 +470,14 @@ export default {
         font-style: normal;
         font-weight: 500;
         color: #FFF;
-
       }
 
       &-descr {
-
         font-family: Roboto, serif;
         font-style: normal;
         font-weight: 300;
         font-size: 24px;
         color: #EEEEEE;
-
       }
 
       &-btn {
@@ -522,18 +527,69 @@ export default {
       display: block;
     }
   }
-
-
 }
 
 @media (max-width: 768px) {
+
+  .main {
+    height: 100vh;
+    grid-template-columns: 1fr;
+  }
+
+  .intro {
+    height: 100vh;
+
+    &:before {
+      content: '';
+      width: 100%;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      height: 15%;
+      z-index: 0;
+      background-color: $black;
+    }
+
+    &__top {
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      padding: 16px;
+    }
+  }
+
   .menu {
-    width: 100%;
+    width: 0;
+    height: 100vh;
+    position: fixed;
+
+    &__lang {
+      position: absolute;
+      z-index: 2;
+      bottom: 10%;
+    }
+
+    &__items {
+      margin-top: 150px;
+      margin-left: 28px;
+    }
+
+    &__bg {
+      display: none;
+    }
 
     &__hamburger {
+      & > span, > span::before, > span::after {
+        background-color: $black;
+      }
 
-      top: 37px;
-      left: 27px;
+      &-active {
+        & > span, > span::before, > span::after {
+          background-color: #FFF;
+        }
+      }
+      top: 6%;
+      left: 20px;
     }
 
     &__hidden {
@@ -546,25 +602,62 @@ export default {
     }
   }
 
-  .main {
-    grid-template-columns: 86px 1fr;
-  }
-
   .carousel {
     visibility: hidden;
   }
+
+  .intro {
+    padding: 0;
+    justify-content: start;
+
+    &__phone {
+      color: $main-accent;
+    }
+
+    &__bottom {
+      position: fixed;
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+      align-items: flex-end;
+      bottom: 16px;
+      right: 16px;
+      z-index: 1;
+
+    }
+
+    &__btn {
+      width: 100%;
+      height: 50px;
+      border-radius: 0;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    &__center {
+      &__title {
+        padding: 0 16px;
+        font-size: 32px;
+
+        & + h3 {
+          margin-top: 16px;
+          padding: 0 16px;
+          font-size: 18px;
+        }
+      }
+    }
+  }
 }
 
-@media (min-width: 1024px) and (max-width: 1439px) {
+@media screen and (max-width: 1024px) {
   .carousel__wrapper {
     grid-template-columns: 32px 1fr 32px;
-  }
-  .intro {
-    padding: 32px 32px;
   }
   .carousel {
     height: 100%;
   }
+
 }
 
 </style>
