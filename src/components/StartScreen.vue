@@ -525,7 +525,8 @@ export default {
   }
 }
 
-@media (max-width: 768px) {
+// mobile
+@media screen and (min-width: 320px) and (max-width: 767px) {
 
   .main {
     height: 100vh;
@@ -651,7 +652,34 @@ export default {
   }
 }
 
-@media screen and (max-width: 1024px) {
+// tablet
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .main {
+    grid-template-columns: 86px 1fr;
+    height: 100vh;
+  }
+  .carousel {
+    display: none;
+  }
+  .menu {
+    width: 100%;
+
+
+    &__full {
+      width: calc(100vw + 86px);
+      height: 100%;
+    }
+
+    &__hidden {
+      transition: 1s ease-in-out;
+      left: calc(-100vw - 86px);
+    }
+  }
+
+}
+
+// Desktop min
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
   .carousel__wrapper {
     grid-template-columns: 32px 1fr 32px;
   }
