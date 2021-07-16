@@ -85,6 +85,7 @@ export default {
 @import "../scss/variables";
 @import "../scss/helpers";
 @import "../scss/fonts";
+@import "../scss/mixins";
 
 .main {
   position: fixed;
@@ -106,7 +107,6 @@ export default {
   align-items: center;
 
   &__bg {
-
     @keyframes fade-in {
       from {
         opacity: 0;
@@ -158,14 +158,12 @@ export default {
     width: calc(50vw + 36px);
     height: 100%;
     transition: 1s ease-in-out;
-
   }
 
   &__hidden {
     transition: 1s ease-in-out;
     left: calc(-50vw - 36px);
   }
-
 
   &__lang {
 
@@ -244,25 +242,10 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 
-
   &__btn {
-
-    height: 48px;
-    width: 250px;
-    border-radius: 8px;
-    font-family: Roboto, serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 21px;
-    text-align: center;
-
-    color: #FFFFFF;
-
-    background: linear-gradient(90deg, #0EC261 2.61%, #039F67 112.6%);
-    background-blend-mode: darken;
     margin-top: 60px;
-    border: none;
+    @include button();
+
   }
 
   &__top {
@@ -343,7 +326,6 @@ export default {
   }
 }
 
-
 // mobile
 @media screen and (min-width: 320px) and (max-width: 767px) {
 
@@ -409,7 +391,6 @@ export default {
           background-color: #FFF;
         }
       }
-
     }
 
     &__hidden {
@@ -429,6 +410,9 @@ export default {
 
     &__phone {
       color: $main-accent;
+      &:active {
+        color: #FFF;
+      }
     }
 
     &__bottom {
@@ -439,7 +423,6 @@ export default {
       bottom: 16px;
       right: 16px;
       z-index: 1;
-
     }
 
     &__btn {
@@ -448,14 +431,11 @@ export default {
       border-radius: 0;
     }
 
-    h1 {
-      margin: 0;
-    }
-
     &__center {
       &__title {
         padding: 0 16px;
         font-size: 32px;
+        margin: 0;
 
         & + h3 {
           margin-top: 16px;
