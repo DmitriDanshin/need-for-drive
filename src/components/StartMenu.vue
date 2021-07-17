@@ -4,8 +4,10 @@
     <div @click="isMenuOpen = !isMenuOpen" class="menu__hamburger" :class="{'menu__hamburger-active' : isMenuOpen}">
       <span></span>
     </div>
-    <div class="menu__lang" :class="{'menu__lang-hidden': !isMenuOpen}">
-      <div content="menu__lang__round">Eng</div>
+    <div class="menu__lang__circle">
+      <div class="menu__lang" :class="{'menu__lang-hidden': !isMenuOpen}">
+        Eng
+      </div>
     </div>
     <div :class="{'menu__hidden': !isMenuOpen}" class="menu__full">
       <div class="menu__items">
@@ -124,7 +126,7 @@ export default {
   }
 
   &__lang {
-    cursor: pointer;
+    cursor: default;
 
     font-family: Roboto, serif;
     font-style: normal;
@@ -138,6 +140,29 @@ export default {
 
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
+
+    &:active {
+      color: $main-accent;
+    }
+
+    &__circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 100%;
+
+      &:hover {
+        border: 2px solid #FFFFFF;
+      }
+
+      &:hover {
+        div {
+          color: #FFF;
+        }
+      }
+    }
   }
 
   &__hamburger {
@@ -204,6 +229,10 @@ export default {
       z-index: 3;
       position: fixed;
       bottom: 28px;
+
+      &__circle {
+        border: none;
+      }
 
       &-hidden {
         visibility: hidden;
