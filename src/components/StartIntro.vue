@@ -44,7 +44,7 @@ export default {
 
 
 .intro {
-  padding: 32px 64px;
+  padding: 32px 128px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

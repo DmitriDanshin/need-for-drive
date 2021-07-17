@@ -35,7 +35,7 @@
 import {ref} from "vue";
 
 export default {
-  name: "StartMenu",
+  name: "NavMenu",
   setup() {
     const isMenuOpen = ref(false);
     const openMenu = () => {
@@ -58,7 +58,9 @@ export default {
 .menu {
   width: 64px;
   background: $menu-color;
-  position: relative;
+
+  position: fixed;
+  height: 100%;
   z-index: 4;
   display: flex;
   padding: 36px 0;
@@ -115,14 +117,14 @@ export default {
     position: absolute;
 
     background: $menu-color;
-    width: calc(50vw + 36px);
+    width: calc(50vw);
     height: 100%;
     transition: 1s ease-in-out;
   }
 
   &__hidden {
     transition: 1s ease-in-out;
-    left: calc(-50vw - 36px);
+    left: calc(-50vw);
   }
 
   &__lang {
@@ -146,6 +148,7 @@ export default {
     }
 
     &__circle {
+      margin-bottom: 46px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -211,7 +214,6 @@ export default {
 
       & {
         visibility: visible;
-
         left: 20px;
       }
     }
@@ -274,7 +276,7 @@ export default {
 // tablet
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .menu {
-    width: 100%;
+    width: 86px;
 
     &__full {
       width: calc(100vw + 86px);
@@ -287,4 +289,5 @@ export default {
     }
   }
 }
+
 </style>
