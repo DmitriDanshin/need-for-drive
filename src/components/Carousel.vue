@@ -106,6 +106,8 @@ export default {
     }
 
     const nextSlide = () => {
+      stopSlideShow();
+
       const activeSlide = sliders.value.find(slider => slider.isActive)
       const nextSlide = sliders.value.find(slider => slider.id === activeSlide.id + 1);
 
@@ -119,6 +121,8 @@ export default {
     }
 
     const prevSlide = () => {
+      stopSlideShow();
+
       const activeSlide = sliders.value.find(slider => slider.isActive)
       const prevSlide = sliders.value.find(slider => slider.id === activeSlide.id - 1);
 
@@ -177,17 +181,6 @@ export default {
     height: 100%;
     position: relative;
 
-    &:before {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
-      opacity: 0.8;
-    }
   }
 
   &__wrapper {
@@ -201,7 +194,18 @@ export default {
   }
 
   .slide {
+
+    @keyframes slide {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0%);
+      }
+    }
+
     display: none;
+    animation: 1s linear slide;
 
     &__wrapper {
       position: absolute;
@@ -275,9 +279,13 @@ export default {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      background-color: rgba(0, 0, 0, .3);
+      filter: brightness(60%);
     }
 
     &-active {
+
+
       height: 100%;
       display: block;
     }
