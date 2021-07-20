@@ -3,25 +3,22 @@
     <div class="carousel__slides">
       <div class="carousel__wrapper">
         <div class="slide-left">
-          <svg width="10" height="20" viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 1L1 10L9 19" stroke="#EEEEEE" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round"/>
-          </svg>
+          <img src="../assets/icons/left-arrow.svg" alt="left" />
         </div>
         <div></div>
         <div class="slide-right">
-          <svg width="10" height="20" viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L9 10L1 19" stroke="#EEEEEE" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round"/>
-          </svg>
+          <img src="../assets/icons/right-arrow.svg" alt="right" />
         </div>
       </div>
       <div class="slide slide-active">
         <div class="slide__wrapper">
           <div class="slide__content">
-            <h3 class="title fz-40 slide__content-title">Бесплатная парковка</h3>
-            <div class="slide__content-descr">Оставляйте машину на платных городских парковках и разрешенных местах,
-              не нарушая ПДД, а также в аэропортах.
+            <h3 class="title fz-40 slide__content-title">
+              Бесплатная парковка
+            </h3>
+            <div class="slide__content-descr">
+              Оставляйте машину на платных городских парковках и разрешенных
+              местах, не нарушая ПДД, а также в аэропортах.
             </div>
             <button class="slide__content-btn">Подробнее</button>
 
@@ -33,16 +30,28 @@
             </div>
           </div>
         </div>
-        <img class="slide__image" src="../assets/slides/parking.jpg" alt="parking">
+        <img
+          class="slide__image"
+          src="../assets/slides/parking.jpg"
+          alt="parking"
+        />
       </div>
       <div class="slide">
-        <img class="slide__image" src="../assets/slides/insurance.jpg" alt="insurance">
+        <img
+          class="slide__image"
+          src="../assets/slides/insurance.jpg"
+          alt="insurance"
+        />
       </div>
       <div class="slide">
-        <img class="slide__image" src="../assets/slides/gas.jpg" alt="gas">
+        <img class="slide__image" src="../assets/slides/gas.jpg" alt="gas" />
       </div>
       <div class="slide">
-        <img class="slide__image" src="../assets/slides/service.jpg" alt="service">
+        <img
+          class="slide__image"
+          src="../assets/slides/service.jpg"
+          alt="service"
+        />
       </div>
     </div>
   </div>
@@ -50,8 +59,8 @@
 
 <script>
 export default {
-  name: "Carousel"
-}
+  name: "Carousel",
+};
 </script>
 
 <style scoped lang="scss">
@@ -75,7 +84,7 @@ export default {
     .dot {
       width: 8px;
       height: 8px;
-      background: #EEEEEE;
+      background: #eeeeee;
       margin: 0 5px;
       border-radius: 100%;
       cursor: pointer;
@@ -138,7 +147,7 @@ export default {
       &-title {
         font-style: normal;
         font-weight: 500;
-        color: #FFF;
+        color: #fff;
       }
 
       &-descr {
@@ -146,30 +155,29 @@ export default {
         font-style: normal;
         font-weight: 300;
         font-size: 24px;
-        color: #EEEEEE;
+        color: #eeeeee;
       }
 
       &-btn {
-
         margin-top: 32px;
         font-family: Roboto, serif;
         font-style: normal;
         font-weight: 500;
         font-size: 18px;
         text-align: center;
-        color: #EEEEEE;
+        color: #eeeeee;
 
         height: 48px;
         width: 164px;
         border-radius: 4px;
         border: none;
 
-        background: linear-gradient(90deg, #13493F 0%, #0C7B1B 100%);
-
+        background: linear-gradient(90deg, #13493f 0%, #0c7b1b 100%);
       }
     }
 
-    &-left, &-right {
+    &-left,
+    &-right {
       width: 100%;
       height: 100%;
       background: $black;
@@ -221,5 +229,4 @@ export default {
     height: 100%;
   }
 }
-
 </style>

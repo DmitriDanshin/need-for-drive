@@ -1,8 +1,8 @@
 <template>
-  <nav-menu/>
+  <nav-menu />
   <section class="main">
-    <start-intro/>
-    <carousel/>
+    <start-intro />
+    <carousel />
   </section>
 </template>
 
@@ -13,8 +13,8 @@ import NavMenu from "@/components/NavMenu";
 
 export default {
   name: "StartScreen",
-  components: {NavMenu, StartIntro, Carousel},
-}
+  components: { NavMenu, StartIntro, Carousel },
+};
 </script>
 
 <style scoped lang="scss">
@@ -46,5 +46,4 @@ export default {
     height: 100vh;
   }
 }
-
 </style>

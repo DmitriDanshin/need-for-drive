@@ -1,29 +1,32 @@
 <template>
   <div v-if="isMenuOpen" class="menu__bg"></div>
   <div class="menu">
-    <div @click="isMenuOpen = !isMenuOpen" class="menu__hamburger" :class="{'menu__hamburger-active' : isMenuOpen}">
+    <div
+      @click="toggleMenu"
+      class="menu__hamburger"
+      :class="{ 'menu__hamburger-active': isMenuOpen }"
+    >
       <span></span>
     </div>
     <div class="menu__lang__circle">
-      <div class="menu__lang" :class="{'menu__lang-hidden': !isMenuOpen}">
+      <div class="menu__lang" :class="{ 'menu__lang-hidden': !isMenuOpen }">
         Eng
       </div>
     </div>
-    <div :class="{'menu__hidden': !isMenuOpen}" class="menu__full">
+    <div :class="{ menu__hidden: !isMenuOpen }" class="menu__full">
       <div class="menu__items">
         <ul>
-          <li class="menu__item">ПАРКОВКА</li>
-          <li class="menu__item active">СТРАХОВКА</li>
-          <li class="menu__item">БЕНЗИН</li>
-          <li class="menu__item">ОБСЛУЖИВАНИЕ</li>
+          <li
+            v-for="menuItem in menuItems"
+            :key="menuItem.id"
+            class="menu__item"
+          >
+            {{ menuItem.title }}
+          </li>
         </ul>
         <div class="menu__social">
           <div>
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                  d="M32 16C32 7.1625 24.8375 0 16 0C7.1625 0 0 7.1625 0 16C0 23.9875 5.85 30.6062 13.5 31.8062V20.625H9.4375V16H13.5V12.475C13.5 8.46563 15.8875 6.25 19.5438 6.25C21.2938 6.25 23.125 6.5625 23.125 6.5625V10.5H21.1063C19.1188 10.5 18.5 11.7344 18.5 13V16H22.9375L22.2281 20.625H18.5V31.8062C26.15 30.6062 32 23.9875 32 16Z"
-                  fill="white"/>
-            </svg>
+            <img src="../assets/icons/facebook.svg" alt="facebook_icon" />
           </div>
         </div>
       </div>
@@ -32,24 +35,49 @@
 </template>
 
 <script>
-import {ref} from "vue";
+import { ref } from "vue";
 
 export default {
   name: "NavMenu",
   setup() {
     const isMenuOpen = ref(false);
-    const openMenu = () => {
-      isMenuOpen.value = true;
-    }
+
+    const menuItems = ref([
+      {
+        isActive: true,
+        title: "ПАРКОВКА",
+        id: 0,
+      },
+      {
+        isActive: false,
+        title: "СТРАХОВКА",
+        id: 1,
+      },
+      {
+        isActive: false,
+        title: "БЕНЗИН",
+        id: 2,
+      },
+      {
+        isActive: false,
+        title: "ОБСЛУЖИВАНИЕ",
+        id: 3,
+      },
+    ]);
+
+    const toggleMenu = () => {
+      isMenuOpen.value = !isMenuOpen.value;
+    };
     return {
-      isMenuOpen, openMenu
-    }
-  }
-}
+      isMenuOpen,
+      menuItems,
+      toggleMenu,
+    };
+  },
+};
 </script>
 
 <style scoped lang="scss">
-
 @import "../scss/variables";
 @import "../scss/helpers";
 @import "../scss/fonts";
@@ -104,7 +132,7 @@ export default {
     font-style: normal;
     font-weight: 500;
     text-align: left;
-    color: #FFF;
+    color: #fff;
 
     & + .active {
       color: $main-accent;
@@ -142,7 +170,6 @@ export default {
 
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
-
     &:active {
       color: $main-accent;
     }
@@ -157,12 +184,12 @@ export default {
       border-radius: 100%;
 
       &:hover {
-        border: 2px solid #FFFFFF;
+        border: 2px solid #ffffff;
       }
 
       &:hover {
         div {
-          color: #FFF;
+          color: #fff;
         }
       }
     }
@@ -177,9 +204,11 @@ export default {
     cursor: pointer;
     z-index: 3;
 
-    & > span, > span::before, > span::after {
+    & > span,
+    > span::before,
+    > span::after {
       width: 24px;
-      transition-duration: .25s;
+      transition-duration: 0.25s;
       display: block;
       position: absolute;
       height: 0.2rem;
@@ -188,12 +217,12 @@ export default {
     }
 
     & > span::before {
-      content: '';
+      content: "";
       top: -8px;
     }
 
     & > span::after {
-      content: '';
+      content: "";
       top: 8px;
     }
 
@@ -251,13 +280,17 @@ export default {
     }
 
     &__hamburger {
-      & > span, > span::before, > span::after {
+      & > span,
+      > span::before,
+      > span::after {
         background-color: $black;
       }
 
       &-active {
-        & > span, > span::before, > span::after {
-          background-color: #FFF;
+        & > span,
+        > span::before,
+        > span::after {
+          background-color: #fff;
         }
       }
     }
@@ -289,5 +322,4 @@ export default {
     }
   }
 }
-
 </style>

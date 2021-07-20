@@ -1,23 +1,21 @@
 <template>
-  <start-screen/>
+  <start-screen />
 </template>
 
 <script>
-
 import StartScreen from "@/components/StartScreen";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     StartScreen,
-  }
-}
+  },
+};
 </script>
 
 <style>
-
 html {
-  height: 100%
+  height: 100%;
 }
 
 body {
