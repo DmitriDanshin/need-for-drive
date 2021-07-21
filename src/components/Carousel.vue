@@ -7,39 +7,11 @@
     <div class="carousel__slides">
       <div class="carousel__wrapper">
         <div class="slide-left" @click="prevSlide">
-          <svg
-            width="10"
-            height="20"
-            viewBox="0 0 10 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9 1L1 10L9 19"
-              stroke="#EEEEEE"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <v-svg name="left-arrow" />
         </div>
         <div></div>
         <div class="slide-right" @click="nextSlide">
-          <svg
-            width="10"
-            height="20"
-            viewBox="0 0 10 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L9 10L1 19"
-              stroke="#EEEEEE"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <v-svg name="right-arrow" />
         </div>
       </div>
 
@@ -74,9 +46,11 @@
 
 <script>
 import { ref } from "vue";
+import VSvg from "@/components/v-svg";
 
 export default {
   name: "Carousel",
+  components: { VSvg },
   setup() {
     const SLIDE_DELAY = 5000;
     const sliders = ref([
@@ -312,6 +286,11 @@ export default {
       align-items: center;
       justify-content: center;
       z-index: 4;
+
+      svg {
+        width: 8px;
+        height: 16px;
+      }
 
       &:hover {
         background: $main-accent;
