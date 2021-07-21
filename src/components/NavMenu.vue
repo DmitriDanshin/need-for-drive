@@ -25,9 +25,7 @@
           </li>
         </ul>
         <div class="menu__social">
-          <div>
-            <img src="../assets/icons/facebook.svg" alt="facebook_icon" />
-          </div>
+          <v-svg name="facebook" />
         </div>
       </div>
     </div>
@@ -35,44 +33,42 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import VSvg from "@/components/v-svg";
 
 export default {
   name: "NavMenu",
-  setup() {
-    const isMenuOpen = ref(false);
-
-    const menuItems = ref([
-      {
-        isActive: true,
-        title: "ПАРКОВКА",
-        id: 0,
-      },
-      {
-        isActive: false,
-        title: "СТРАХОВКА",
-        id: 1,
-      },
-      {
-        isActive: false,
-        title: "БЕНЗИН",
-        id: 2,
-      },
-      {
-        isActive: false,
-        title: "ОБСЛУЖИВАНИЕ",
-        id: 3,
-      },
-    ]);
-
-    const toggleMenu = () => {
-      isMenuOpen.value = !isMenuOpen.value;
-    };
+  components: { VSvg },
+  data() {
     return {
-      isMenuOpen,
-      menuItems,
-      toggleMenu,
+      isMenuOpen: false,
+      menuItems: [
+        {
+          isActive: true,
+          title: "ПАРКОВКА",
+          id: 0,
+        },
+        {
+          isActive: false,
+          title: "СТРАХОВКА",
+          id: 1,
+        },
+        {
+          isActive: false,
+          title: "БЕНЗИН",
+          id: 2,
+        },
+        {
+          isActive: false,
+          title: "ОБСЛУЖИВАНИЕ",
+          id: 3,
+        },
+      ],
     };
+  },
+  methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
   },
 };
 </script>
@@ -123,6 +119,13 @@ export default {
     ul {
       list-style-type: none;
       padding: 0;
+    }
+  }
+
+  &__social {
+    svg {
+      width: 32px;
+      height: 32px;
     }
   }
 

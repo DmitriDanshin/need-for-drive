@@ -3,11 +3,11 @@
     <div class="carousel__slides">
       <div class="carousel__wrapper">
         <div class="slide-left">
-          <img src="../assets/icons/left-arrow.svg" alt="left" />
+          <v-svg :name="'left-arrow'"></v-svg>
         </div>
         <div></div>
         <div class="slide-right">
-          <img src="../assets/icons/right-arrow.svg" alt="right" />
+          <v-svg :name="'right-arrow'"></v-svg>
         </div>
       </div>
       <div class="slide slide-active">
@@ -58,8 +58,11 @@
 </template>
 
 <script>
+import VSvg from "@/components/v-svg";
+
 export default {
   name: "Carousel",
+  components: { VSvg },
 };
 </script>
 
@@ -187,6 +190,11 @@ export default {
       align-items: center;
       justify-content: center;
       z-index: 4;
+
+      svg {
+        height: 18px;
+        width: 8px;
+      }
 
       &:hover {
         background: $main-accent;

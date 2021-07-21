@@ -4,7 +4,7 @@
       <h2 class="intro__title title fz-30">Need for drive</h2>
       <div class="intro__city">
         <div class="intro__city-icon">
-          <img src="../assets/icons/city-icon.svg" alt="city-icon" />
+          <v-svg name="city-icon" />
         </div>
         <span class="intro__city-title">Ульяновск</span>
       </div>
@@ -25,8 +25,11 @@
 </template>
 
 <script>
+import VSvg from "@/components/v-svg";
+
 export default {
   name: "StartIntro",
+  components: { VSvg },
 };
 </script>
 
@@ -63,6 +66,11 @@ export default {
 
     &-icon {
       margin-right: 8px;
+
+      svg {
+        height: 18px;
+        width: 15px;
+      }
     }
 
     &-title {
