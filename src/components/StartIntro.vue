@@ -95,7 +95,7 @@ export default {
     font-weight: normal;
     font-size: 13px;
     line-height: 15px;
-    color: #999999;
+    color: $gray;
   }
 
   &__phone {
@@ -161,7 +161,7 @@ export default {
       color: $main-accent;
 
       &:active {
-        color: #fff;
+        color: $white;
       }
     }
 

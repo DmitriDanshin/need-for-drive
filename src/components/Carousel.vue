@@ -3,11 +3,11 @@
     <div class="carousel__slides">
       <div class="carousel__wrapper">
         <div class="slide-left">
-          <v-svg :name="'left-arrow'"></v-svg>
+          <v-svg name="left-arrow"></v-svg>
         </div>
         <div></div>
         <div class="slide-right">
-          <v-svg :name="'right-arrow'"></v-svg>
+          <v-svg name="right-arrow"></v-svg>
         </div>
       </div>
       <div class="slide slide-active">
@@ -87,7 +87,7 @@ export default {
     .dot {
       width: 8px;
       height: 8px;
-      background: #eeeeee;
+      background: $gray-light;
       margin: 0 5px;
       border-radius: 100%;
       cursor: pointer;
@@ -150,7 +150,7 @@ export default {
       &-title {
         font-style: normal;
         font-weight: 500;
-        color: #fff;
+        color: $white;
       }
 
       &-descr {
@@ -158,7 +158,7 @@ export default {
         font-style: normal;
         font-weight: 300;
         font-size: 24px;
-        color: #eeeeee;
+        color: $gray-light;
       }
 
       &-btn {
@@ -168,7 +168,7 @@ export default {
         font-weight: 500;
         font-size: 18px;
         text-align: center;
-        color: #eeeeee;
+        color: $gray-light;
 
         height: 48px;
         width: 164px;
