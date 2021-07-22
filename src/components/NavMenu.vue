@@ -137,6 +137,11 @@ export default {
     text-align: left;
     color: $white;
 
+    &:hover {
+      cursor: pointer;
+      color: $main-accent;
+    }
+
     & + .active {
       color: $main-accent;
     }
