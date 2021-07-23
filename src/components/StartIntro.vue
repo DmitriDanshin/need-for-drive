@@ -15,7 +15,7 @@
       <h3 class="title fz-26 intro__center__title">
         Поминутная аренда авто твоего города
       </h3>
-      <button class="intro__btn">Забронировать</button>
+      <button class="intro__btn" @click="makeOrder">Забронировать</button>
     </div>
     <div class="intro__bottom">
       <div class="intro__copyright">© 2016-2019 «Need for drive»</div>
@@ -30,6 +30,12 @@ import VSvg from "@/components/v-svg";
 export default {
   name: "StartIntro",
   components: { VSvg },
+  emits: ["make-order"],
+  methods: {
+    makeOrder() {
+      this.$emit("make-order");
+    },
+  },
 };
 </script>
 
