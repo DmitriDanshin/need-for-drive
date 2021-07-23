@@ -1,68 +1,160 @@
 <template>
-  <div class="carousel">
+  <div
+    @mouseenter="stopSlideShow"
+    @mouseleave="continueSlideShow"
+    class="carousel"
+  >
     <div class="carousel__slides">
       <div class="carousel__wrapper">
-        <div class="slide-left">
-          <v-svg name="left-arrow"></v-svg>
+        <div class="slide-left" @click="prevSlide">
+          <v-svg name="left-arrow" />
         </div>
         <div></div>
-        <div class="slide-right">
-          <v-svg name="right-arrow"></v-svg>
+        <div class="slide-right" @click="nextSlide">
+          <v-svg name="right-arrow" />
         </div>
       </div>
-      <div class="slide slide-active">
+
+      <div class="dots">
+        <div
+          @click="selectSlide(dot.id)"
+          v-for="dot in sliders"
+          :key="dot.id"
+          class="dot"
+          :class="{ 'dot-active': dot.isActive }"
+        ></div>
+      </div>
+
+      <div
+        v-for="slide in sliders"
+        :key="slide.id"
+        class="slide"
+        :class="{ 'slide-active': slide.isActive }"
+      >
         <div class="slide__wrapper">
           <div class="slide__content">
-            <h3 class="title fz-40 slide__content-title">
-              Бесплатная парковка
-            </h3>
-            <div class="slide__content-descr">
-              Оставляйте машину на платных городских парковках и разрешенных
-              местах, не нарушая ПДД, а также в аэропортах.
-            </div>
+            <h3 class="title fz-40 slide__content-title">{{ slide.title }}</h3>
+            <div class="slide__content-descr">{{ slide.body }}</div>
             <button class="slide__content-btn">Подробнее</button>
-
-            <div class="dots">
-              <div class="dot dot-active"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-            </div>
           </div>
         </div>
-        <img
-          class="slide__image"
-          src="../assets/slides/parking.jpg"
-          alt="parking"
-        />
-      </div>
-      <div class="slide">
-        <img
-          class="slide__image"
-          src="../assets/slides/insurance.jpg"
-          alt="insurance"
-        />
-      </div>
-      <div class="slide">
-        <img class="slide__image" src="../assets/slides/gas.jpg" alt="gas" />
-      </div>
-      <div class="slide">
-        <img
-          class="slide__image"
-          src="../assets/slides/service.jpg"
-          alt="service"
-        />
+        <img class="slide__image" :src="slide.src" :alt="slide.alt" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
 import VSvg from "@/components/v-svg";
 
 export default {
   name: "Carousel",
   components: { VSvg },
+  setup() {
+    const SLIDE_DELAY = 5000;
+    const sliders = ref([
+      {
+        id: 0,
+        src: require("../assets/slides/parking.jpg"),
+        alt: "parking",
+        title: "Бесплатная парковка",
+        body: "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах",
+        isActive: true,
+      },
+      {
+        id: 1,
+        src: require("../assets/slides/insurance.jpg"),
+        alt: "insurance",
+        title: "Страховка",
+        body: "Полная страховка страховка автомобиля",
+        isActive: false,
+      },
+      {
+        id: 2,
+        src: require("../assets/slides/gas.jpg"),
+        alt: "gas",
+        title: "Бензин",
+        body: "Полный бак на любой заправке города за наш счёт",
+        isActive: false,
+      },
+      {
+        id: 3,
+        src: require("../assets/slides/service.jpg"),
+        alt: "service",
+        title: "Обслуживание",
+        body: "Автомобиль проходит еженедельное ТО",
+        isActive: false,
+      },
+    ]);
+
+    let autoSlideShow = setInterval(() => {
+      nextSlide();
+    }, SLIDE_DELAY);
+
+    const stopSlideShow = () => {
+      clearInterval(autoSlideShow);
+    };
+
+    const continueSlideShow = () => {
+      autoSlideShow = setInterval(() => {
+        nextSlide();
+      }, SLIDE_DELAY);
+    };
+
+    const selectSlide = (id) => {
+      const activeSlide = sliders.value.find((slider) => slider.isActive);
+      activeSlide.isActive = false;
+
+      const selectedSlide = sliders.value.find((slider) => slider.id === id);
+      selectedSlide.isActive = true;
+    };
+
+    const nextSlide = () => {
+      stopSlideShow();
+
+      const activeSlide = sliders.value.find((slider) => slider.isActive);
+      const nextSlide = sliders.value.find(
+        (slider) => slider.id === activeSlide.id + 1
+      );
+
+      activeSlide.isActive = false;
+      if (nextSlide) {
+        nextSlide.isActive = true;
+      } else {
+        const firstSlide = sliders.value.find((slider) => slider.id === 0);
+        firstSlide.isActive = true;
+      }
+    };
+
+    const prevSlide = () => {
+      stopSlideShow();
+
+      const activeSlide = sliders.value.find((slider) => slider.isActive);
+      const prevSlide = sliders.value.find(
+        (slider) => slider.id === activeSlide.id - 1
+      );
+
+      activeSlide.isActive = false;
+      if (prevSlide) {
+        prevSlide.isActive = true;
+      } else {
+        const firstSlide = sliders.value.find(
+          (slider) => slider.id === sliders.value.length - 1
+        );
+        firstSlide.isActive = true;
+      }
+    };
+
+    return {
+      sliders,
+      stopSlideShow,
+      nextSlide,
+      prevSlide,
+      selectSlide,
+      continueSlideShow,
+    };
+  },
 };
 </script>
 
@@ -83,6 +175,7 @@ export default {
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
+    z-index: 4;
 
     .dot {
       width: 8px;
@@ -102,18 +195,6 @@ export default {
   &__slides {
     height: 100%;
     position: relative;
-
-    &:before {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
-      opacity: 0.8;
-    }
   }
 
   &__wrapper {
@@ -128,6 +209,21 @@ export default {
 
   .slide {
     display: none;
+
+    @keyframes fade {
+      from {
+        opacity: 0.9;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    &-active {
+      height: 100%;
+      display: block;
+      animation: 1s linear fade;
+    }
 
     &__wrapper {
       position: absolute;
@@ -192,8 +288,8 @@ export default {
       z-index: 4;
 
       svg {
-        height: 18px;
         width: 8px;
+        height: 16px;
       }
 
       &:hover {
@@ -205,11 +301,8 @@ export default {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-
-    &-active {
-      height: 100%;
-      display: block;
+      background-color: rgba(0, 0, 0, 0.3);
+      filter: brightness(60%);
     }
   }
 }
