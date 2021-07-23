@@ -180,7 +180,7 @@ export default {
     .dot {
       width: 8px;
       height: 8px;
-      background: #eeeeee;
+      background: $gray-light;
       margin: 0 5px;
       border-radius: 100%;
       cursor: pointer;

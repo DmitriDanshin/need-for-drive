@@ -2,9 +2,9 @@
   <div v-if="isMenuOpen" class="menu__bg"></div>
   <div class="menu">
     <div
-      @click="toggleMenu"
       class="menu__hamburger"
       :class="{ 'menu__hamburger-active': isMenuOpen }"
+      @click="toggleMenu"
     >
       <span></span>
     </div>
@@ -135,7 +135,12 @@ export default {
     font-style: normal;
     font-weight: 500;
     text-align: left;
-    color: #fff;
+    color: $white;
+
+    &:hover {
+      cursor: pointer;
+      color: $main-accent;
+    }
 
     & + .active {
       color: $main-accent;
@@ -187,12 +192,12 @@ export default {
       border-radius: 100%;
 
       &:hover {
-        border: 2px solid #ffffff;
+        border: 2px solid $white;
       }
 
       &:hover {
         div {
-          color: #fff;
+          color: $white;
         }
       }
     }
@@ -215,7 +220,7 @@ export default {
       display: block;
       position: absolute;
       height: 0.2rem;
-      background-color: #ffffff;
+      background-color: $white;
       border-radius: 2rem;
     }
 
@@ -293,7 +298,7 @@ export default {
         & > span,
         > span::before,
         > span::after {
-          background-color: #fff;
+          background-color: $white;
         }
       }
     }
