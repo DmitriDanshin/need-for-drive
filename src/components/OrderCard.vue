@@ -112,7 +112,16 @@ export default {
 // mobile
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .order {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 12px 0 0;
     border: none;
+    width: 100%;
+
+    &__list {
+      width: 80%;
+    }
   }
 }
 </style>

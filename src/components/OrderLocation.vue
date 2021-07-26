@@ -229,19 +229,29 @@ export default {
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .map {
     &__position {
+      align-items: center;
+
       &__display {
+        display: flex;
+        justify-content: center;
+
         img {
           width: 100%;
         }
       }
     }
+
+    &__search {
+      justify-content: center;
+    }
   }
   .location {
-    padding-left: 64px;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
     display: flex;
     flex-direction: column;
     justify-content: start;
-    padding-right: 64px;
   }
 }
 
@@ -251,7 +261,6 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    padding-right: 64px;
   }
   .map {
     &__position {

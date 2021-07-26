@@ -76,6 +76,7 @@ export default {
           height: 18px;
           width: 15px;
         }
+
         margin-right: 8px;
       }
 
@@ -135,9 +136,12 @@ export default {
   .order {
     overflow-y: scroll;
 
-    &__header,
+    &__header {
+      padding: 32px 5px 24px 64px;
+    }
+
     &__nav {
-      padding: 32px 64px 32px 64px;
+      padding: 24px 5px 24px 12px;
     }
 
     &__nav {
