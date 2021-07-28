@@ -148,6 +148,9 @@ export default {
       border-radius: 0;
       width: 100%;
       display: none;
+      position: fixed;
+      left: 0;
+      bottom: 10%;
     }
   }
 }
