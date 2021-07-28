@@ -1,5 +1,5 @@
 <template>
-  <div class="order">
+  <div :class="{ 'order-active': isMobileOrder }" class="order">
     <div class="order__title">Ваш заказ:</div>
     <div class="order__list">
       <div class="order__list__item">
@@ -31,13 +31,30 @@
     <div class="order__price">
       <div><span>Цена:</span> от 8 000 до 12 000 ₽</div>
     </div>
-    <button disabled class="order__btn">Выбрать модель</button>
+    <div class="order__btn__wrapper">
+      <button disabled class="order__btn">Выбрать модель</button>
+    </div>
+  </div>
+  <div class="order__mobile">
+    <button class="order__mobile__button" @click="toggleMobileOrder">
+      Детали заказа
+    </button>
   </div>
 </template>
 
 <script>
 export default {
   name: "OrderCard",
+  data() {
+    return {
+      isMobileOrder: false,
+    };
+  },
+  methods: {
+    toggleMobileOrder() {
+      this.isMobileOrder = !this.isMobileOrder;
+    },
+  },
 };
 </script>
 
@@ -53,6 +70,18 @@ export default {
   padding-left: 32px;
   padding-right: 64px;
   padding-top: 32px;
+
+  &__mobile {
+    display: none;
+    margin-top: 8px;
+    z-index: 5;
+
+    &__button {
+      @include button();
+      width: 100%;
+      border-radius: 0;
+    }
+  }
 
   &__price {
     margin-top: 32px;
@@ -113,14 +142,46 @@ export default {
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .order {
     display: flex;
+    background-color: $white;
     align-items: center;
     flex-direction: column;
     padding: 12px 0 0;
     border: none;
-    width: 100%;
+    overflow: hidden;
+    height: 0;
+    transition: 1.5s ease;
+    visibility: hidden;
+
+    &-active {
+      display: flex;
+      overflow: auto;
+      height: 100%;
+      visibility: visible;
+    }
+
+    &__btn {
+      &__wrapper {
+        width: 100%;
+      }
+    }
+
+    &__mobile {
+      display: block;
+    }
+
+    &__title {
+      text-align: left;
+      padding-left: 12px;
+    }
+
+    &__price {
+      padding-left: 12px;
+    }
 
     &__list {
-      width: 80%;
+      margin-top: 8px;
+      padding-right: 12px;
+      padding-left: 12px;
     }
   }
 }

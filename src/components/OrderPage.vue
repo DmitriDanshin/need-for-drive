@@ -141,11 +141,20 @@ export default {
     }
 
     &__nav {
-      padding: 24px 5px 24px 12px;
-    }
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      padding-left: 12px;
+      padding-right: 12px;
 
-    &__nav {
-      overflow-x: scroll;
+      &__item {
+        &:nth-child(2n) {
+          justify-content: flex-end;
+        }
+        svg {
+          display: none;
+        }
+      }
     }
   }
 }
