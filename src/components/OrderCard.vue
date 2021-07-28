@@ -33,10 +33,15 @@
     </div>
     <div class="order__btn__wrapper">
       <button disabled class="order__btn">Выбрать модель</button>
+      <button class="order__btn__back" @click="toggleMobileOrder">Назад</button>
     </div>
   </div>
   <div class="order__mobile">
-    <button class="order__mobile__button" @click="toggleMobileOrder">
+    <button
+      class="order__mobile__button"
+      v-if="!isMobileOrder"
+      @click="toggleMobileOrder"
+    >
       Детали заказа
     </button>
   </div>
@@ -134,32 +139,42 @@ export default {
   &__btn {
     margin-top: 32px;
     @include button();
+    border-radius: 0;
     width: 100%;
+
+    &__back {
+      margin-top: 32px;
+      @include button();
+      border-radius: 0;
+      width: 100%;
+      display: none;
+    }
   }
 }
 
 // mobile
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .order {
-    display: flex;
+    position: absolute;
+    left: 0;
     background-color: $white;
-    align-items: center;
-    flex-direction: column;
-    padding: 12px 0 0;
-    border: none;
-    overflow: hidden;
-    height: 0;
-    transition: 1.5s ease;
-    visibility: hidden;
+    width: 100%;
+    display: none;
+    padding: 0;
 
     &-active {
       display: flex;
+      flex-direction: column;
       overflow: auto;
       height: 100%;
       visibility: visible;
     }
 
     &__btn {
+      &__back {
+        display: block;
+      }
+
       &__wrapper {
         width: 100%;
       }
@@ -167,6 +182,9 @@ export default {
 
     &__mobile {
       display: block;
+      position: absolute;
+      bottom: 10%;
+      width: 100%;
     }
 
     &__title {

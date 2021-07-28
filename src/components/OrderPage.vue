@@ -134,8 +134,6 @@ export default {
 // mobile
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .order {
-    overflow-y: scroll;
-
     &__header {
       padding: 32px 5px 24px 64px;
     }
