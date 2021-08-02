@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-    <order-card />
+    <order-card btn-text="Выбрать модель" @next-page="nextPage" />
   </div>
 </template>
 
@@ -64,6 +64,7 @@ import OrderCard from "@/components/OrderCard";
 export default {
   name: "OrderLocation",
   components: { OrderCard },
+  emits: ["next-page"],
   data() {
     return {
       searchPoint: "",
@@ -98,6 +99,11 @@ export default {
       return this.points.filter((point) =>
         point.toLowerCase().includes(this.searchPoint.toLowerCase())
       );
+    },
+  },
+  methods: {
+    nextPage() {
+      this.$emit("next-page");
     },
   },
 };

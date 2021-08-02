@@ -10,36 +10,97 @@
       </div>
     </div>
     <div class="order__nav">
-      <div class="order__nav__item">
-        <div class="order__nav__item__text order__nav__item__text-active">
-          Местоположение
+      <div v-for="page in pages" :key="page.id" class="order__nav__item">
+        <div
+          class="order__nav__item__text"
+          :class="{
+            active: page.isActive,
+            done: page.isDone && !page.isActive,
+          }"
+          @click="selectPage(page)"
+        >
+          {{ page.title }}
         </div>
         <v-svg name="next-arrow" />
       </div>
-      <div class="order__nav__item">
-        <div class="order__nav__item__text">Модель</div>
-        <v-svg name="next-arrow" />
-      </div>
-      <div class="order__nav__item">
-        <div class="order__nav__item__text">Дополнительно</div>
-        <v-svg name="next-arrow" />
-      </div>
-      <div class="order__nav__item">
-        <div class="order__nav__item__text">Итого</div>
-        <v-svg name="next-arrow" />
-      </div>
     </div>
-    <order-location />
+    <order-location v-if="currentPage === 'location'" @next-page="nextPage" />
+    <order-cars v-else-if="currentPage === 'cars'" @next-page="nextPage" />
+    <order-other v-else-if="currentPage === 'other'" @next-page="nextPage" />
+    <order-total v-else />
   </section>
 </template>
 
 <script>
 import OrderLocation from "@/components/OrderLocation";
 import VSvg from "@/components/v-svg";
+import OrderCars from "@/components/OrderCars";
+import OrderOther from "@/components/OrderOther";
+import OrderTotal from "@/components/OrderTotal";
 
 export default {
   name: "OrderPage",
-  components: { VSvg, OrderLocation },
+  components: { OrderTotal, OrderOther, OrderCars, VSvg, OrderLocation },
+  data() {
+    return {
+      pages: [
+        {
+          title: "Местоположение",
+          pageName: "location",
+          id: 0,
+          isActive: true,
+          isDone: true,
+        },
+        {
+          title: "Модель",
+          pageName: "cars",
+          id: 1,
+          isActive: false,
+          isDone: false,
+        },
+        {
+          title: "Дополнительно",
+          pageName: "other",
+          id: 2,
+          isActive: false,
+          isDone: false,
+        },
+        {
+          title: "Итого",
+          pageName: "total",
+          id: 3,
+          isActive: false,
+          isDone: false,
+        },
+      ],
+      currentPage: "location",
+    };
+  },
+  methods: {
+    selectPage(page) {
+      if (page.isDone) {
+        const activePage = this.pages.find((page) => page.isActive);
+        activePage.isActive = false;
+        page.isActive = true;
+      }
+      this.currentPage = this.pages.find((page) => page.isActive).pageName;
+    },
+    nextPage() {
+      const currentPage = this.pages.find((page) => page.isActive);
+      if (currentPage.id === this.pages.length - 1) {
+        return;
+      }
+
+      const currentPageId = currentPage.id;
+      currentPage.isActive = false;
+      currentPage.isDone = true;
+
+      const nextPage = this.pages.find((page) => page.id === currentPageId + 1);
+      nextPage.isActive = true;
+
+      this.currentPage = nextPage.pageName;
+    },
+  },
 };
 </script>
 
@@ -112,20 +173,21 @@ export default {
         width: 6px;
       }
 
-      &__text {
-        font-family: Roboto, serif;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 16px;
-        color: $gray;
+      .active {
+        cursor: default;
+        color: $main-accent;
+      }
 
+      .done {
         cursor: pointer;
+        color: $black;
+      }
 
-        &-active {
-          cursor: default;
-          color: $main-accent;
-        }
+      &__text {
+        @include text();
+        font-weight: bold;
+        color: $gray;
+        cursor: not-allowed;
       }
     }
   }
@@ -149,6 +211,7 @@ export default {
         &:nth-child(2n) {
           justify-content: flex-end;
         }
+
         svg {
           display: none;
         }
