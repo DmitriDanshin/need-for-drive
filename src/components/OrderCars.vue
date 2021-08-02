@@ -126,7 +126,7 @@ export default {
         border-radius: 100%;
         width: 12px;
         height: 12px;
-        background-color: #fff;
+        background-color: $white;
       }
     }
 
@@ -148,12 +148,7 @@ export default {
     }
 
     &__title {
-      font-family: Roboto, serif;
-      font-style: normal;
-      font-weight: 300;
-      font-size: 14px;
-      line-height: 16px;
-
+      @include text();
       color: $gray;
     }
   }
@@ -181,18 +176,15 @@ export default {
       cursor: pointer;
 
       &__title {
-        font-family: Roboto, serif;
-        font-style: normal;
+        @include text();
         font-weight: normal;
         font-size: 18px;
-        color: #121212;
+        color: $black;
       }
 
       &__price {
-        font-family: Roboto, serif;
-        font-style: normal;
+        @include text();
         font-weight: normal;
-        font-size: 14px;
         color: $gray;
       }
 
@@ -212,11 +204,18 @@ export default {
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .cars {
     grid-template-columns: 1fr;
+    padding-right: 0;
+    padding-left: 0;
+    overflow-x: auto;
+
+    &__select {
+      position: fixed;
+      padding: 0 0 0 32px;
+    }
 
     &__catalog {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: 1fr;
+      margin-top: 44px;
+      display: flex;
     }
   }
 }
