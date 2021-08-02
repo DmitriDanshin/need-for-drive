@@ -29,17 +29,19 @@
         <v-svg name="next-arrow" />
       </div>
     </div>
-    <order-location />
+    <order-location v-if="false" />
+    <order-cars />
   </section>
 </template>
 
 <script>
 import OrderLocation from "@/components/OrderLocation";
 import VSvg from "@/components/v-svg";
+import OrderCars from "@/components/OrderCars";
 
 export default {
   name: "OrderPage",
-  components: { VSvg, OrderLocation },
+  components: { OrderCars, VSvg, OrderLocation },
 };
 </script>
 
@@ -58,6 +60,7 @@ export default {
 
   &__header {
     padding: 32px 64px 32px 128px;
+    z-index: 3;
     border-bottom: 1px solid $gray-light;
     display: flex;
     justify-content: space-between;
@@ -149,6 +152,7 @@ export default {
         &:nth-child(2n) {
           justify-content: flex-end;
         }
+
         svg {
           display: none;
         }
