@@ -57,6 +57,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  overflow-y: auto;
 
   &__header {
     padding: 32px 64px 32px 128px;
@@ -137,6 +138,9 @@ export default {
 // mobile
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .order {
+    height: 100%;
+    overflow-y: hidden;
+
     &__header {
       padding: 32px 5px 24px 64px;
     }
