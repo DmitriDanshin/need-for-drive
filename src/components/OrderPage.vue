@@ -4,7 +4,7 @@
       <h2 class="order__header__title title fz-30">Need for drive</h2>
       <div class="order__header__city">
         <div class="order__header__city-icon">
-          <v-svg name="city-icon" />
+          <v-svg name="city-icon"/>
         </div>
         <span class="order__header__city-title">Ульяновск</span>
       </div>
@@ -12,22 +12,19 @@
     <div class="order__nav">
       <div v-for="page in pages" :key="page.id" class="order__nav__item">
         <div
-          class="order__nav__item__text"
-          :class="{
+            class="order__nav__item__text"
+            :class="{
             active: page.isActive,
             done: page.isDone && !page.isActive,
-          }"
-          @click="selectPage(page)"
+            }"
+            @click="selectPage(page)"
         >
           {{ page.title }}
         </div>
-        <v-svg name="next-arrow" />
+        <v-svg name="next-arrow"/>
       </div>
     </div>
-    <order-location v-if="currentPage === 'location'" @next-page="nextPage" />
-    <order-cars v-else-if="currentPage === 'cars'" @next-page="nextPage" />
-    <order-other v-else-if="currentPage === 'other'" @next-page="nextPage" />
-    <order-total v-else />
+    <component :is="currentPage" @next-page="nextPage"/>
   </section>
 </template>
 
@@ -40,50 +37,50 @@ import OrderTotal from "@/components/OrderTotal";
 
 export default {
   name: "OrderPage",
-  components: { OrderTotal, OrderOther, OrderCars, VSvg, OrderLocation },
+  components: {OrderTotal, OrderOther, OrderCars, VSvg, OrderLocation},
   data() {
     return {
       pages: [
         {
           title: "Местоположение",
-          pageName: "location",
+          pageName: "OrderLocation",
           id: 0,
           isActive: true,
           isDone: true,
         },
         {
           title: "Модель",
-          pageName: "cars",
+          pageName: "OrderCars",
           id: 1,
           isActive: false,
           isDone: false,
         },
         {
           title: "Дополнительно",
-          pageName: "other",
+          pageName: "OrderOther",
           id: 2,
           isActive: false,
           isDone: false,
         },
         {
           title: "Итого",
-          pageName: "total",
+          pageName: "OrderTotal",
           id: 3,
           isActive: false,
           isDone: false,
         },
       ],
-      currentPage: "location",
+      currentPage: "OrderLocation",
     };
   },
   methods: {
     selectPage(page) {
       if (page.isDone) {
         const activePage = this.pages.find((page) => page.isActive);
+        this.currentPage = page.pageName;
         activePage.isActive = false;
         page.isActive = true;
       }
-      this.currentPage = this.pages.find((page) => page.isActive).pageName;
     },
     nextPage() {
       const currentPage = this.pages.find((page) => page.isActive);
@@ -91,11 +88,10 @@ export default {
         return;
       }
 
-      const currentPageId = currentPage.id;
       currentPage.isActive = false;
       currentPage.isDone = true;
 
-      const nextPage = this.pages.find((page) => page.id === currentPageId + 1);
+      const nextPage = this.pages.find((page) => page.id === currentPage.id + 1);
       nextPage.isActive = true;
 
       this.currentPage = nextPage.pageName;

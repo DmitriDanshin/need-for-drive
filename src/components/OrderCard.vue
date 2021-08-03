@@ -31,18 +31,27 @@
     <div class="order__price">
       <div><span>Цена:</span> от 8 000 до 12 000 ₽</div>
     </div>
-    <div class="order__btn__wrapper">
-      <button :disabled="disabled" class="order__btn" @click="nextPage">
+    <div class="order__btn__wrapper" >
+      <button
+          :disabled="disabled"
+          class="order__btn"
+          @click="nextPage"
+      >
         {{ btnText }}
       </button>
-      <button class="order__btn__back" @click="toggleMobileOrder">Назад</button>
+      <button
+          class="order__btn__back"
+          @click="toggleMobileOrder"
+      >
+        Назад
+      </button>
     </div>
   </div>
   <div class="order__mobile">
     <button
-      class="order__mobile__button"
-      v-if="!isMobileOrder"
-      @click="toggleMobileOrder"
+        class="order__mobile__button"
+        v-if="!isMobileOrder"
+        @click="toggleMobileOrder"
     >
       Детали заказа
     </button>
