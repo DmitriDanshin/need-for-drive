@@ -3,16 +3,16 @@
     <div>
       <div class="cars__select">
         <div
-          v-for="carModel in carModels"
-          :key="carModel.id"
-          :class="{ active: carModel.isSelected }"
-          class="cars__select__item"
+            v-for="carModel in carModels"
+            :key="carModel.id"
+            :class="{ active: carModel.isSelected }"
+            class="cars__select__item"
         >
           <div class="cars__select__title">{{ carModel.title }}</div>
           <input
-            type="radio"
-            name="cars"
-            @change="selectCarModel(carModel.id)"
+              type="radio"
+              name="cars"
+              @change="selectCarModel(carModel.id)"
           />
         </div>
       </div>
@@ -21,40 +21,40 @@
           <div class="cars__catalog__item__title">ELANTRA</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/elantra.png" alt="" />
+            <img src="../assets/cars/elantra.png" alt=""/>
           </div>
         </div>
         <div class="cars__catalog__item">
           <div class="cars__catalog__item__title">i30 N</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/i30_n.png" alt="i30 N" />
+            <img src="../assets/cars/i30_n.png" alt="i30 N"/>
           </div>
         </div>
         <div class="cars__catalog__item">
           <div class="cars__catalog__item__title">CRETA</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/creta.png" alt="creta" />
+            <img src="../assets/cars/creta.png" alt="creta"/>
           </div>
         </div>
         <div class="cars__catalog__item">
           <div class="cars__catalog__item__title">ELANTRA</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/sonata.png" alt="" />
+            <img src="../assets/cars/sonata.png" alt=""/>
           </div>
         </div>
         <div class="cars__catalog__item">
           <div class="cars__catalog__item__title">SONATA</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/sonata.png" alt="SONATA" />
+            <img src="../assets/cars/sonata.png" alt="SONATA"/>
           </div>
         </div>
       </div>
     </div>
-    <order-card />
+    <order-card/>
   </div>
 </template>
 
@@ -63,7 +63,7 @@ import OrderCard from "@/components/OrderCard";
 
 export default {
   name: "OrderCars",
-  components: { OrderCard },
+  components: {OrderCard},
   data() {
     return {
       carModels: [
@@ -90,7 +90,7 @@ export default {
     selectCarModel(id) {
       const prevSelect = this.carModels.find((model) => model.id === id);
       const currentSelect =
-        this.carModels.find((model) => model.isSelected) ?? prevSelect;
+          this.carModels.find((model) => model.isSelected) ?? prevSelect;
       currentSelect.isSelected = false;
       prevSelect.isSelected = true;
     },
@@ -206,16 +206,24 @@ export default {
     grid-template-columns: 1fr;
     padding-right: 0;
     padding-left: 0;
-    overflow-x: auto;
+    overflow-y: auto;
+    height: calc(100% - 190px - 10%);
+    margin: 0;
+    padding-top: 0;
 
     &__select {
       position: fixed;
-      padding: 0 0 0 32px;
+      padding: 0 0 0 48px;
+      width: 100%;
+      border: $white 15px solid;
+      background-color: $white;
+      transform: translateY(-3px);
     }
 
     &__catalog {
       margin-top: 44px;
       display: flex;
+      flex-direction: column;
     }
   }
 }
