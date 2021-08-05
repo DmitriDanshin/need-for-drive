@@ -1,5 +1,8 @@
 <template>
-  <div :class="{ 'order-active': isMobileOrder }" class="order">
+  <div
+      :class="{ 'order-active': isMobileOrder }"
+      class="order"
+  >
     <div class="order__title">Ваш заказ:</div>
     <div class="order__list">
       <div class="order__list__item">
@@ -31,7 +34,7 @@
     <div class="order__price">
       <div><span>Цена:</span> от 8 000 до 12 000 ₽</div>
     </div>
-    <div class="order__btn__wrapper" >
+    <div class="order__btn__wrapper">
       <button
           :disabled="disabled"
           class="order__btn"

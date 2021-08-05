@@ -1,35 +1,41 @@
 <template>
   <div
-    @mouseenter="stopSlideShow"
-    @mouseleave="continueSlideShow"
-    class="carousel"
+      @mouseenter="stopSlideShow"
+      @mouseleave="continueSlideShow"
+      class="carousel"
   >
     <div class="carousel__slides">
       <div class="carousel__wrapper">
-        <div class="slide-left" @click="prevSlide">
-          <v-svg name="left-arrow" />
+        <div
+            class="slide-left"
+            @click="prevSlide"
+        >
+          <v-svg name="left-arrow"/>
         </div>
         <div></div>
-        <div class="slide-right" @click="nextSlide">
-          <v-svg name="right-arrow" />
+        <div
+            class="slide-right"
+            @click="nextSlide"
+        >
+          <v-svg name="right-arrow"/>
         </div>
       </div>
 
       <div class="dots">
         <div
-          @click="selectSlide(dot.id)"
-          v-for="dot in sliders"
-          :key="dot.id"
-          class="dot"
-          :class="{ 'dot-active': dot.isActive }"
+            @click="selectSlide(dot.id)"
+            v-for="dot in sliders"
+            :key="dot.id"
+            class="dot"
+            :class="{ 'dot-active': dot.isActive }"
         ></div>
       </div>
 
       <div
-        v-for="slide in sliders"
-        :key="slide.id"
-        class="slide"
-        :class="{ 'slide-active': slide.isActive }"
+          v-for="slide in sliders"
+          :key="slide.id"
+          class="slide"
+          :class="{ 'slide-active': slide.isActive }"
       >
         <div class="slide__wrapper">
           <div class="slide__content">
@@ -38,19 +44,23 @@
             <button class="slide__content-btn">Подробнее</button>
           </div>
         </div>
-        <img class="slide__image" :src="slide.src" :alt="slide.alt" />
+        <img
+            class="slide__image"
+            :src="slide.src"
+            :alt="slide.alt"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import {ref} from "vue";
 import VSvg from "@/components/v-svg";
 
 export default {
   name: "Carousel",
-  components: { VSvg },
+  components: {VSvg},
   setup() {
     const SLIDE_DELAY = 5000;
     const sliders = ref([
@@ -115,7 +125,7 @@ export default {
 
       const activeSlide = sliders.value.find((slider) => slider.isActive);
       const nextSlide = sliders.value.find(
-        (slider) => slider.id === activeSlide.id + 1
+          (slider) => slider.id === activeSlide.id + 1
       );
 
       activeSlide.isActive = false;
@@ -132,7 +142,7 @@ export default {
 
       const activeSlide = sliders.value.find((slider) => slider.isActive);
       const prevSlide = sliders.value.find(
-        (slider) => slider.id === activeSlide.id - 1
+          (slider) => slider.id === activeSlide.id - 1
       );
 
       activeSlide.isActive = false;
@@ -140,7 +150,7 @@ export default {
         prevSlide.isActive = true;
       } else {
         const firstSlide = sliders.value.find(
-          (slider) => slider.id === sliders.value.length - 1
+            (slider) => slider.id === sliders.value.length - 1
         );
         firstSlide.isActive = true;
       }

@@ -1,10 +1,13 @@
 <template>
-  <nav-menu />
-  <section class="main" v-if="!isOrderPage">
-    <start-intro @make-order="toggleOrderPage" />
-    <carousel />
+  <nav-menu/>
+  <section
+      class="main"
+      v-if="!isOrderPage"
+  >
+    <start-intro @make-order="toggleOrderPage"/>
+    <carousel/>
   </section>
-  <order-page v-if="isOrderPage" />
+  <order-page v-if="isOrderPage"/>
 </template>
 
 <script>
@@ -15,7 +18,7 @@ import OrderPage from "@/components/OrderPage";
 
 export default {
   name: "StartScreen",
-  components: { OrderPage, NavMenu, StartIntro, Carousel },
+  components: {OrderPage, NavMenu, StartIntro, Carousel},
   data() {
     return {
       isOrderPage: false,

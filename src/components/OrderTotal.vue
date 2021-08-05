@@ -1,7 +1,10 @@
 <template>
   <div class="total">
     <div><h1>Итого</h1></div>
-    <order-card :disabled="true" btn-text="Заказать" />
+    <order-card
+        :disabled="true"
+        btn-text="Заказать"
+    />
   </div>
 </template>
 
@@ -10,7 +13,7 @@ import OrderCard from "@/components/OrderCard";
 
 export default {
   name: "OrderTotal",
-  components: { OrderCard },
+  components: {OrderCard},
 };
 </script>
 

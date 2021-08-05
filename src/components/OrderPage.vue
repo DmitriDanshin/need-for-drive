@@ -10,12 +10,16 @@
       </div>
     </div>
     <div class="order__nav">
-      <div v-for="page in pages" :key="page.id" class="order__nav__item">
+      <div
+          v-for="page in pages"
+          :key="page.id"
+          class="order__nav__item"
+      >
         <div
             class="order__nav__item__text"
             :class="{
-            active: page.isActive,
-            done: page.isDone && !page.isActive,
+                active: page.isActive,
+                done: page.isDone && !page.isActive,
             }"
             @click="selectPage(page)"
         >
@@ -24,7 +28,10 @@
         <v-svg name="next-arrow"/>
       </div>
     </div>
-    <component :is="currentPage" @next-page="nextPage"/>
+    <component
+        :is="currentPage"
+        @next-page="nextPage"
+    />
   </section>
 </template>
 

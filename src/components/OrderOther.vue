@@ -1,7 +1,10 @@
 <template>
   <div class="other">
     <div><h1>Дополнительно</h1></div>
-    <order-card btn-text="Итого" @next-page="nextPage" />
+    <order-card
+        btn-text="Итого"
+        @next-page="nextPage"
+    />
   </div>
 </template>
 
@@ -10,7 +13,7 @@ import OrderCard from "@/components/OrderCard";
 
 export default {
   name: "OrderOther",
-  components: { OrderCard },
+  components: {OrderCard},
   methods: {
     nextPage() {
       this.$emit("next-page");
