@@ -21,35 +21,50 @@
           <div class="cars__catalog__item__title">ELANTRA</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/elantra.png" alt=""/>
+            <img
+                src="../assets/cars/elantra.png"
+                alt=""
+            />
           </div>
         </div>
         <div class="cars__catalog__item">
           <div class="cars__catalog__item__title">i30 N</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/i30_n.png" alt="i30 N"/>
+            <img
+                src="../assets/cars/i30_n.png"
+                alt="i30 N"
+            />
           </div>
         </div>
         <div class="cars__catalog__item">
           <div class="cars__catalog__item__title">CRETA</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/creta.png" alt="creta"/>
+            <img
+                src="../assets/cars/creta.png"
+                alt="creta"
+            />
           </div>
         </div>
         <div class="cars__catalog__item">
           <div class="cars__catalog__item__title">ELANTRA</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/sonata.png" alt=""/>
+            <img
+                src="../assets/cars/sonata.png"
+                alt=""
+            />
           </div>
         </div>
         <div class="cars__catalog__item">
           <div class="cars__catalog__item__title">SONATA</div>
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
-            <img src="../assets/cars/sonata.png" alt="SONATA"/>
+            <img
+                src="../assets/cars/sonata.png"
+                alt="SONATA"
+            />
           </div>
         </div>
       </div>
@@ -201,6 +216,7 @@ export default {
   }
 }
 
+// mobile
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .cars {
     grid-template-columns: 1fr;
@@ -209,6 +225,35 @@ export default {
     overflow-y: auto;
     height: calc(100% - 190px - 10%);
     margin: 0;
+    padding-top: 0;
+
+    &__select {
+      position: fixed;
+      padding: 0 0 0 48px;
+      width: 100%;
+      border: $white 15px solid;
+      background-color: $white;
+      transform: translateY(-3px);
+    }
+
+    &__catalog {
+      margin-top: 44px;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+// tablet
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .cars {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+    padding-left: 0;
+    overflow-y: auto;
+    height: calc(100% - 190px - 10%);
+    margin-left: 64px;
+
     padding-top: 0;
 
     &__select {

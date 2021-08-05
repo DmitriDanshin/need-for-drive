@@ -4,7 +4,7 @@
       <h2 class="order__header__title title fz-30">Need for drive</h2>
       <div class="order__header__city">
         <div class="order__header__city-icon">
-          <v-svg name="city-icon" />
+          <v-svg name="city-icon"/>
         </div>
         <span class="order__header__city-title">Ульяновск</span>
       </div>
@@ -14,23 +14,23 @@
         <div class="order__nav__item__text order__nav__item__text-active">
           Местоположение
         </div>
-        <v-svg name="next-arrow" />
+        <v-svg name="next-arrow"/>
       </div>
       <div class="order__nav__item">
         <div class="order__nav__item__text">Модель</div>
-        <v-svg name="next-arrow" />
+        <v-svg name="next-arrow"/>
       </div>
       <div class="order__nav__item">
         <div class="order__nav__item__text">Дополнительно</div>
-        <v-svg name="next-arrow" />
+        <v-svg name="next-arrow"/>
       </div>
       <div class="order__nav__item">
         <div class="order__nav__item__text">Итого</div>
-        <v-svg name="next-arrow" />
+        <v-svg name="next-arrow"/>
       </div>
     </div>
-    <order-location v-if="false" />
-    <order-cars />
+    <order-location v-if="false"/>
+    <order-cars/>
   </section>
 </template>
 
@@ -41,7 +41,7 @@ import OrderCars from "@/components/OrderCars";
 
 export default {
   name: "OrderPage",
-  components: { OrderCars, VSvg, OrderLocation },
+  components: {OrderCars, VSvg, OrderLocation},
 };
 </script>
 
