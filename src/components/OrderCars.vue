@@ -266,6 +266,8 @@ export default {
     }
 
     &__catalog {
+      padding-left: 30px;
+      padding-right: 30px;
       margin-top: 44px;
       display: flex;
       flex-direction: column;

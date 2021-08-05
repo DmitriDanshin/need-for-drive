@@ -228,20 +228,22 @@ export default {
     width: 100%;
     display: none;
 
-
     &-active {
+      align-items: flex-end;
       display: flex;
       flex-direction: column;
       overflow: auto;
       visibility: visible;
       padding-top: 0;
-      padding-right: 128px;
-      padding-left: 64px;
+      padding-right: 0;
+      padding-left: 0;
     }
 
     &__btn {
+      margin-left: 64px;
       &__back {
         display: block;
+        margin-left: 64px;
       }
 
       &__wrapper {
@@ -258,18 +260,20 @@ export default {
 
     &__title {
       text-align: left;
-      padding-left: 12px;
+      padding-left: 30px;
+      padding-right: 30px;
     }
 
     &__price {
-      padding-left: 12px;
+      padding-left: 30px;
+      padding-right: 30px;
     }
 
     &__list {
-      width: 90%;
-      margin-top: 8px;
-      padding-right: 12px;
-      padding-left: 12px;
+      width: 80%;
+      padding-left: 0;
+      padding-right: 5%;
+
     }
   }
 }
