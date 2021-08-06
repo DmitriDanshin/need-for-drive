@@ -24,14 +24,42 @@
       <div class="other__date">
         <div class="other__title">Дата аренды</div>
         <div class="other__date__items">
-          <span class="other__date__label">
-           С
-          </span>
-          <input type="datetime-local">
+          <div class="other__date__label">
+            С
+          </div>
+          <date-picker
+            mode="dateTime"
+            v-model="range.start"
+            color="green"
+          >
+            <template v-slot="{ inputValue, inputEvents }">
+              <div>
+                <input
+                  :value="inputValue"
+                  v-on="inputEvents"
+                  class="other__date__input"
+                />
+              </div>
+            </template>
+          </date-picker>
           <div class="other__date__label">
             По
           </div>
-          <input type="datetime-local">
+          <date-picker
+            mode="dateTime"
+            v-model="range.end"
+            color="green"
+          >
+            <template v-slot="{ inputValue, inputEvents }">
+              <div>
+                <input
+                  :value="inputValue"
+                  v-on="inputEvents"
+                  class="other__date__input"
+                />
+              </div>
+            </template>
+          </date-picker>
         </div>
       </div>
 
@@ -80,7 +108,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
     <order-card/>
@@ -89,10 +116,11 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
+import {DatePicker} from 'v-calendar';
 
 export default {
   name: "OrderOther",
-  components: {OrderCard},
+  components: {OrderCard, DatePicker},
   data() {
     return {
       colors: [
@@ -140,7 +168,11 @@ export default {
           text: "Правый руль, 1600р",
           isActive: false
         }
-      ]
+      ],
+      range: {
+        start: new Date(),
+        end: new Date(),
+      },
     };
   },
   methods: {
@@ -249,31 +281,15 @@ export default {
       align-items: end;
       column-gap: 16px;
       row-gap: 8px;
+    }
 
-      input {
-        width: 12rem;
-        border: none;
-        border-bottom: 1px solid #999999;
-        outline: none;
-        padding: 0 8px;
-        margin: 0;
-
-        &::-webkit-search-cancel-button {
-          -webkit-appearance: none;
-          height: 1em;
-          width: 1em;
-          border-radius: 50em;
-          background: url(../assets/icons/search_close.svg) no-repeat 50% 50%;
-          background-size: contain;
-          opacity: 0;
-          pointer-events: none;
-        }
-
-        &:focus::-webkit-search-cancel-button {
-          opacity: 1;
-          pointer-events: all;
-        }
-      }
+    &__input {
+      width: 12rem;
+      border: none;
+      border-bottom: 1px solid #999999;
+      outline: none;
+      padding: 0 8px;
+      margin: 0;
     }
 
     &__label {
