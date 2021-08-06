@@ -5,17 +5,17 @@
         <div class="other__title">Цвет</div>
         <div class="other__color__items">
           <div
-              v-for="color in colors"
-              :key="color.name"
-              :class="{'active' : color.isActive}"
-              class="other__color__item"
-              @click="selectColor(color)"
+            v-for="color in colors"
+            :key="color.name"
+            :class="{'active' : color.isActive}"
+            class="other__color__item"
+            @click="selectColor(color)"
           >
             <div class="other__color__title">{{ color.text }}</div>
             <input
-                type="radio"
-                name="color"
-                :checked="color.isActive"
+              :checked="color.isActive"
+              type="radio"
+              name="color"
             />
           </div>
         </div>
@@ -39,23 +39,23 @@
         <div class="other__title">Тариф</div>
         <div class="other__rate__items">
           <div
-              class="other__rate__item "
-              v-for="rate in rates"
-              :key="rate.name"
-              @click="selectRate(rate)"
+            v-for="rate in rates"
+            :key="rate.name"
+            class="other__rate__item "
+            @click="selectRate(rate)"
           >
             <input
-                :checked="rate.isActive"
-                type="radio"
-                name="rate"
+              :checked="rate.isActive"
+              type="radio"
+              name="rate"
             />
             <div
-                :class="{'active': rate.isActive}"
-                class="other__rate__title "
-            >{{ rate.text }}
+              :class="{'active': rate.isActive}"
+              class="other__rate__title "
+            >
+              {{ rate.text }}
             </div>
           </div>
-
         </div>
       </div>
 
@@ -63,23 +63,24 @@
         <div class="other__title">Доп услуги</div>
         <div class="other__services__items">
           <div
-              class="other__services__item"
-              v-for="service in services"
-              :key="service.id"
-              @click="toggleService(service)"
+            v-for="service in services"
+            :key="service.id"
+            class="other__services__item"
+            @click="toggleService(service)"
           >
             <div
-                :class="{'active': service.isActive}"
-                class="other__services__title"
+              :class="{'active': service.isActive}"
+              class="other__services__title"
             >{{ service.text }}
             </div>
             <input
-                type="checkbox"
-                name="services"
-                :checked="service.isActive"
+              :checked="service.isActive"
+              type="checkbox"
+              name="services"
             />
           </div>
         </div>
+
       </div>
     </div>
     <order-card/>
