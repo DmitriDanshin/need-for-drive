@@ -62,7 +62,8 @@
           "multiline": "always"
         }
       ],
-      "prettier/prettier": "off"
+      "prettier/prettier": "off",
+      "semi": "warn"
     }
   },
   "browserslist": [
