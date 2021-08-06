@@ -172,6 +172,7 @@ export default {
     margin-top: 48px;
     display: grid;
     grid-template-columns: 368px 368px;
+    padding-top: 15px;
 
     .active {
       border: 1px solid $main-accent;
@@ -231,12 +232,16 @@ export default {
       position: fixed;
       padding: 0 0 0 48px;
       width: 100%;
-      border: $white 15px solid;
+      border-right: none;
+      border-left: none;
+      border-top: $white 15px solid;
+      border-bottom: $white 15px solid;
       background-color: $white;
       transform: translateY(-3px);
     }
 
     &__catalog {
+      padding-top: 15px;
       margin-top: 44px;
       display: flex;
       flex-direction: column;
@@ -260,7 +265,10 @@ export default {
       position: fixed;
       padding: 0 0 0 48px;
       width: 100%;
-      border: $white 15px solid;
+      border-right: none;
+      border-left: none;
+      border-top: $white 15px solid;
+      border-bottom: $white 15px solid;
       background-color: $white;
       transform: translateY(-3px);
     }
