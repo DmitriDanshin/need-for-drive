@@ -41,7 +41,29 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "vue/max-attributes-per-line": [
+        "warn",
+        {
+          "singleline": {
+            "max": 1,
+            "allowFirstLine": true
+          },
+          "multiline": {
+            "max": 1,
+            "allowFirstLine": false
+          }
+        }
+      ],
+      "vue/html-closing-bracket-newline": [
+        "error",
+        {
+          "singleline": "never",
+          "multiline": "always"
+        }
+      ],
+      "prettier/prettier": "off"
+    }
   },
   "browserslist": [
     "> 1%",
