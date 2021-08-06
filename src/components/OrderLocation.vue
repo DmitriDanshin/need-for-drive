@@ -7,18 +7,18 @@
         </div>
         <div class="map__search__autocomplete">
           <input
-              v-model="searchCity"
-              placeholder="Начните вводить город ..."
-              type="search"
+            v-model="searchCity"
+            placeholder="Начните вводить город ..."
+            type="search"
           />
           <div
-              class="map__search__autocomplete__list"
-              :class="{ active: filteredCities.length }"
+            class="map__search__autocomplete__list"
+            :class="{ active: filteredCities.length }"
           >
             <div
-                v-for="city in filteredCities"
-                :key="city"
-                class="map__search__autocomplete__item"
+              v-for="city in filteredCities"
+              :key="city"
+              class="map__search__autocomplete__item"
             >
               {{ city }}
             </div>
@@ -29,18 +29,18 @@
         </div>
         <div class="map__search__autocomplete">
           <input
-              v-model="searchPoint"
-              placeholder="Начните вводить пункт ..."
-              type="search"
+            v-model="searchPoint"
+            placeholder="Начните вводить пункт ..."
+            type="search"
           />
           <div
-              class="map__search__autocomplete__list"
-              :class="{ active: filteredPoints.length }"
+            class="map__search__autocomplete__list"
+            :class="{ active: filteredPoints.length }"
           >
             <div
-                v-for="point in filteredPoints"
-                :key="point"
-                class="map__search__autocomplete__item"
+              v-for="point in filteredPoints"
+              :key="point"
+              class="map__search__autocomplete__item"
             >
               {{ point }}
             </div>
@@ -51,15 +51,15 @@
         <div class="map__position__title">Выбрать на карте:</div>
         <div class="map__position__display">
           <img
-              src="../assets/map.png"
-              alt="map"
+            src="../assets/map.png"
+            alt="map"
           />
         </div>
       </div>
     </div>
     <order-card
-        btn-text="Выбрать модель"
-        @next-page="nextPage"
+      btn-text="Выбрать модель"
+      @next-page="nextPage"
     />
   </div>
 </template>
@@ -98,12 +98,12 @@ export default {
   computed: {
     filteredCities() {
       return this.cities.filter((city) =>
-          city.toLowerCase().includes(this.searchCity.toLowerCase())
+        city.toLowerCase().includes(this.searchCity.toLowerCase())
       );
     },
     filteredPoints() {
       return this.points.filter((point) =>
-          point.toLowerCase().includes(this.searchPoint.toLowerCase())
+        point.toLowerCase().includes(this.searchPoint.toLowerCase())
       );
     },
   },

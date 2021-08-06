@@ -11,17 +11,17 @@
     </div>
     <div class="order__nav">
       <div
-          v-for="page in pages"
-          :key="page.id"
-          class="order__nav__item"
+        v-for="page in pages"
+        :key="page.id"
+        class="order__nav__item"
       >
         <div
-            class="order__nav__item__text"
-            :class="{
+          :class="{
                 active: page.isActive,
                 done: page.isDone && !page.isActive,
             }"
-            @click="selectPage(page)"
+          class="order__nav__item__text"
+          @click="selectPage(page)"
         >
           {{ page.title }}
         </div>
@@ -29,8 +29,8 @@
       </div>
     </div>
     <component
-        :is="currentPage"
-        @next-page="nextPage"
+      :is="currentPage"
+      @next-page="nextPage"
     />
   </section>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div
-      :class="{ 'order-active': isMobileOrder }"
-      class="order"
+    :class="{ 'order-active': isMobileOrder }"
+    class="order"
   >
     <div class="order__title">Ваш заказ:</div>
     <div class="order__list">
@@ -36,15 +36,15 @@
     </div>
     <div class="order__btn__wrapper">
       <button
-          :disabled="disabled"
-          class="order__btn"
-          @click="nextPage"
+        :disabled="disabled"
+        class="order__btn"
+        @click="nextPage"
       >
         {{ btnText }}
       </button>
       <button
-          class="order__btn__back"
-          @click="toggleMobileOrder"
+        class="order__btn__back"
+        @click="toggleMobileOrder"
       >
         Назад
       </button>
@@ -52,9 +52,9 @@
   </div>
   <div class="order__mobile">
     <button
-        class="order__mobile__button"
-        v-if="!isMobileOrder"
-        @click="toggleMobileOrder"
+      class="order__mobile__button"
+      v-if="!isMobileOrder"
+      @click="toggleMobileOrder"
     >
       Детали заказа
     </button>

@@ -16,8 +16,8 @@
         Поминутная аренда авто твоего города
       </h3>
       <button
-          class="intro__btn"
-          @click="makeOrder"
+        class="intro__btn"
+        @click="makeOrder"
       >Забронировать
       </button>
     </div>

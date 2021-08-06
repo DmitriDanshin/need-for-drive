@@ -1,8 +1,8 @@
 <template>
   <nav-menu/>
   <section
-      class="main"
-      v-if="!isOrderPage"
+    v-if="!isOrderPage"
+    class="main"
   >
     <start-intro @make-order="toggleOrderPage"/>
     <carousel/>

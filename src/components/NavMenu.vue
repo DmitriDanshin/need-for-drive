@@ -1,34 +1,34 @@
 <template>
   <div
-      v-if="isMenuOpen"
-      class="menu__bg"
+    v-if="isMenuOpen"
+    class="menu__bg"
   ></div>
   <div class="menu">
     <div
-        class="menu__hamburger"
-        :class="{ 'menu__hamburger-active': isMenuOpen }"
-        @click="toggleMenu"
+      :class="{ 'menu__hamburger-active': isMenuOpen }"
+      class="menu__hamburger"
+      @click="toggleMenu"
     >
       <span></span>
     </div>
     <div class="menu__lang__circle">
       <div
-          class="menu__lang"
-          :class="{ 'menu__lang-hidden': !isMenuOpen }"
+        :class="{ 'menu__lang-hidden': !isMenuOpen }"
+        class="menu__lang"
       >
         Eng
       </div>
     </div>
     <div
-        :class="{ menu__hidden: !isMenuOpen }"
-        class="menu__full"
+      :class="{ menu__hidden: !isMenuOpen }"
+      class="menu__full"
     >
       <div class="menu__items">
         <ul>
           <li
-              v-for="menuItem in menuItems"
-              :key="menuItem.id"
-              class="menu__item"
+            v-for="menuItem in menuItems"
+            :key="menuItem.id"
+            class="menu__item"
           >
             {{ menuItem.title }}
           </li>

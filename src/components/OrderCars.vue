@@ -2,8 +2,8 @@
   <div class="cars">
     <div><h1>Модель</h1></div>
     <order-card
-        btn-text="Дополнительно"
-        @next-page="nextPage"
+      btn-text="Дополнительно"
+      @next-page="nextPage"
     />
   </div>
 </template>

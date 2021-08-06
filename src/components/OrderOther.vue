@@ -2,8 +2,8 @@
   <div class="other">
     <div><h1>Дополнительно</h1></div>
     <order-card
-        btn-text="Итого"
-        @next-page="nextPage"
+      btn-text="Итого"
+      @next-page="nextPage"
     />
   </div>
 </template>

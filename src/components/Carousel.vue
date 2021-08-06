@@ -1,21 +1,21 @@
 <template>
   <div
-      @mouseenter="stopSlideShow"
-      @mouseleave="continueSlideShow"
-      class="carousel"
+    class="carousel"
+    @mouseenter="stopSlideShow"
+    @mouseleave="continueSlideShow"
   >
     <div class="carousel__slides">
       <div class="carousel__wrapper">
         <div
-            class="slide-left"
-            @click="prevSlide"
+          class="slide-left"
+          @click="prevSlide"
         >
           <v-svg name="left-arrow"/>
         </div>
         <div></div>
         <div
-            class="slide-right"
-            @click="nextSlide"
+          class="slide-right"
+          @click="nextSlide"
         >
           <v-svg name="right-arrow"/>
         </div>
@@ -23,19 +23,19 @@
 
       <div class="dots">
         <div
-            @click="selectSlide(dot.id)"
-            v-for="dot in sliders"
-            :key="dot.id"
-            class="dot"
-            :class="{ 'dot-active': dot.isActive }"
+          v-for="dot in sliders"
+          :class="{ 'dot-active': dot.isActive }"
+          :key="dot.id"
+          class="dot"
+          @click="selectSlide(dot.id)"
         ></div>
       </div>
 
       <div
-          v-for="slide in sliders"
-          :key="slide.id"
-          class="slide"
-          :class="{ 'slide-active': slide.isActive }"
+        :class="{ 'slide-active': slide.isActive }"
+        v-for="slide in sliders"
+        :key="slide.id"
+        class="slide"
       >
         <div class="slide__wrapper">
           <div class="slide__content">
@@ -45,9 +45,9 @@
           </div>
         </div>
         <img
-            class="slide__image"
-            :src="slide.src"
-            :alt="slide.alt"
+          :src="slide.src"
+          :alt="slide.alt"
+          class="slide__image"
         />
       </div>
     </div>
@@ -125,7 +125,7 @@ export default {
 
       const activeSlide = sliders.value.find((slider) => slider.isActive);
       const nextSlide = sliders.value.find(
-          (slider) => slider.id === activeSlide.id + 1
+        (slider) => slider.id === activeSlide.id + 1
       );
 
       activeSlide.isActive = false;
@@ -142,7 +142,7 @@ export default {
 
       const activeSlide = sliders.value.find((slider) => slider.isActive);
       const prevSlide = sliders.value.find(
-          (slider) => slider.id === activeSlide.id - 1
+        (slider) => slider.id === activeSlide.id - 1
       );
 
       activeSlide.isActive = false;
@@ -150,7 +150,7 @@ export default {
         prevSlide.isActive = true;
       } else {
         const firstSlide = sliders.value.find(
-            (slider) => slider.id === sliders.value.length - 1
+          (slider) => slider.id === sliders.value.length - 1
         );
         firstSlide.isActive = true;
       }
