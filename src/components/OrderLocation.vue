@@ -13,7 +13,7 @@
             @focus="toggleCitiesFocus"
           />
           <div
-            :class="{'active': filteredCities && citiesFocus}"
+            :class="{ active: filteredCities && citiesFocus }"
             class="map__search__autocomplete__list"
           >
             <div
@@ -22,7 +22,7 @@
               class="map__search__autocomplete__item"
               @click="selectCity(city)"
             >
-              {{ city }}
+              {{ city.name }}
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
             @focus="togglePointsFocus"
           />
           <div
-            :class="{'active': filteredPoints && pointsFocus}"
+            :class="{ active: filteredPoints && pointsFocus }"
             class="map__search__autocomplete__list"
           >
             <div
@@ -46,7 +46,7 @@
               class="map__search__autocomplete__item"
               @click="selectPoint(point)"
             >
-              {{ point }}
+              {{ point.address }}
             </div>
           </div>
         </div>
@@ -61,42 +61,37 @@
         </div>
       </div>
     </div>
-    <order-card/>
+    <order-card
+      :btn-text="'Выбрать модель'"
+      :disabled="disabledButton"
+    />
   </div>
 </template>
 
 <script>
 import OrderCard from "@/components/OrderCard";
 import {setItemInStore} from "@/components/mixins/setItemInStore";
+import {getCities, getPoints} from "@/APIFactory";
 
 export default {
   name: "OrderLocation",
   components: {OrderCard},
+  async created() {
+    this.cities = await getCities();
+    this.cities = this.cities.data;
+    this.points = await getPoints();
+    this.points = this.points.data;
+  },
   data() {
     return {
       searchPoint: "",
       citiesFocus: false,
       pointsFocus: false,
       searchCity: "",
-      cities: [
-        "Уфа",
-        "Москва",
-        "Санкт-Петербург",
-        "Томск",
-        "Самара",
-        "Тольятти",
-        "Тюмень",
-      ],
-      points: [
-        "Улица 1",
-        "Улица 2",
-        "Улица 3",
-        "Улица 4",
-        "Улица 5",
-        "Улица 6",
-        "Улица 7",
-        "ABC"
-      ],
+      cities: [],
+      points: [],
+      selectedCity: {},
+      disabledButton: true,
     };
   },
   methods: {
@@ -106,28 +101,44 @@ export default {
     togglePointsFocus() {
       this.pointsFocus = !this.pointsFocus;
     },
-
     selectCity(city) {
-      this.searchCity = city;
+      this.searchCity = city.name;
       this.toggleCitiesFocus();
-      setItemInStore('Пункт выдачи', `${this.searchCity}, ${this.searchPoint}`, this);
+      setItemInStore(
+        "Пункт выдачи",
+        `${this.searchCity}, ${this.searchPoint}`,
+        this
+      );
+      this.selectedCity = city;
     },
     selectPoint(point) {
-      this.searchPoint = point;
+      this.searchPoint = point.address;
       this.togglePointsFocus();
-      setItemInStore('Пункт выдачи', `${this.searchCity}, ${this.searchPoint}`, this);
-    }
+      setItemInStore(
+        "Пункт выдачи",
+        `${this.searchCity}, ${this.searchPoint}`,
+        this
+      );
+      if (this.selectedCity.length !== 0 && this.searchPoint.length !== 0) {
+        this.disabledButton = false;
+      }
+    },
   },
   computed: {
     filteredCities() {
       return this.cities.filter((city) =>
-        city.toLowerCase().includes(this.searchCity.toLowerCase())
+        city.name?.toLowerCase().includes(this.searchCity.toLowerCase())
       );
     },
     filteredPoints() {
-      return this.points.filter((point) =>
-        point.toLowerCase().includes(this.searchPoint.toLowerCase())
-      );
+      return this.points.filter((point) => {
+        return (
+          point.address
+            ?.toLowerCase()
+            .includes(this.searchPoint.toLowerCase()) &&
+          point.cityId?.id === this.selectedCity.id
+        );
+      });
     },
   },
 };
@@ -176,7 +187,6 @@ export default {
         background: $white;
         border: 1px solid $gray-light;
         padding: 8px 4px;
-
 
         &::-webkit-scrollbar {
           width: 6px;
