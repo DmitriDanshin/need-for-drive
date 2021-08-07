@@ -72,6 +72,7 @@
 import OrderCard from "@/components/OrderCard";
 import {setItemInStore} from "@/components/mixins/setItemInStore";
 import {getCities, getPoints} from "@/APIFactory";
+import {getCoordsByAddress} from "@/APIPosition";
 
 export default {
   name: "OrderLocation",
@@ -81,6 +82,7 @@ export default {
     this.cities = this.cities.data;
     this.points = await getPoints();
     this.points = this.points.data;
+
   },
   data() {
     return {
@@ -101,6 +103,18 @@ export default {
     togglePointsFocus() {
       this.pointsFocus = !this.pointsFocus;
     },
+
+    findAddress(address) {
+      getCoordsByAddress(address).then((res) => {
+        const address = res.data.find(a => a.country === "Russia");
+        const coords = {
+          "latitude": address.latitude ?? 55,
+          "longitude": address.longitude ?? 45
+        };
+        console.log(coords);
+      });
+    },
+
     selectCity(city) {
       this.searchCity = city.name;
       this.toggleCitiesFocus();
@@ -110,6 +124,7 @@ export default {
         this
       );
       this.selectedCity = city;
+      this.findAddress(`${this.selectedCity}, ${this.searchPoint}`);
     },
     selectPoint(point) {
       this.searchPoint = point.address;
@@ -122,6 +137,7 @@ export default {
       if (this.selectedCity.length !== 0 && this.searchPoint.length !== 0) {
         this.disabledButton = false;
       }
+      this.findAddress(`${this.selectedCity}, ${this.searchPoint}`);
     },
   },
   computed: {
