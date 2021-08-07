@@ -29,8 +29,8 @@
         <v-svg name="next-arrow"/>
       </div>
     </div>
-    <order-location v-if="false"/>
-    <order-cars/>
+    <order-location />
+    <order-cars v-if="false"/>
   </section>
 </template>
 
