@@ -30,7 +30,8 @@
       </div>
     </div>
     <order-location v-if="false"/>
-    <order-cars/>
+    <order-cars v-if="false"/>
+    <order-total/>
   </section>
 </template>
 
@@ -38,10 +39,11 @@
 import OrderLocation from "@/components/OrderLocation";
 import VSvg from "@/components/v-svg";
 import OrderCars from "@/components/OrderCars";
+import OrderTotal from "@/components/OrderTotal";
 
 export default {
   name: "OrderPage",
-  components: {OrderCars, VSvg, OrderLocation},
+  components: {OrderTotal, OrderCars, VSvg, OrderLocation},
 };
 </script>
 
