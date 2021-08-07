@@ -67,6 +67,7 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
+import {setItemInStore} from "@/components/mixins/setItemInStore";
 
 export default {
   name: "OrderLocation",
@@ -109,10 +110,12 @@ export default {
     selectCity(city) {
       this.searchCity = city;
       this.toggleCitiesFocus();
+      setItemInStore('Пункт выдачи', `${this.searchCity}, ${this.searchPoint}`, this);
     },
     selectPoint(point) {
       this.searchPoint = point;
       this.togglePointsFocus();
+      setItemInStore('Пункт выдачи', `${this.searchCity}, ${this.searchPoint}`, this);
     }
   },
   computed: {

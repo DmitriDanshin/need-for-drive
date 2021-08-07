@@ -1,34 +1,18 @@
 <template>
   <div
-      :class="{ 'order-active': isMobileOrder }"
-      class="order"
+    :class="{ 'order-active': isMobileOrder }"
+    class="order"
   >
     <div class="order__title">Ваш заказ:</div>
     <div class="order__list">
-      <div class="order__list__item">
-        <div class="order__list__name">Пункт выдачи</div>
+      <div
+        v-for="item in items"
+        :key="item.name"
+        class="order__list__item"
+      >
+        <div class="order__list__name">{{ item.name }}</div>
         <div class="order__list__dots"></div>
-        <div class="order__list__value">Ульяновск, Нариманова 42</div>
-      </div>
-      <div class="order__list__item">
-        <div class="order__list__name">Модель</div>
-        <div class="order__list__dots"></div>
-        <div class="order__list__value">Hyndai, i30 N</div>
-      </div>
-      <div class="order__list__item">
-        <div class="order__list__name">Цвет</div>
-        <div class="order__list__dots"></div>
-        <div class="order__list__value">Голубой</div>
-      </div>
-      <div class="order__list__item">
-        <div class="order__list__name">Длительность аренды</div>
-        <div class="order__list__dots"></div>
-        <div class="order__list__value">1д 2ч</div>
-      </div>
-      <div class="order__list__item">
-        <div class="order__list__name">Полный бак</div>
-        <div class="order__list__dots"></div>
-        <div class="order__list__value">Да</div>
+        <div class="order__list__value">{{item.value}}</div>
       </div>
     </div>
     <div class="order__price">
@@ -36,23 +20,23 @@
     </div>
     <div class="order__btn__wrapper">
       <button
-          disabled
-          class="order__btn"
+        disabled
+        class="order__btn"
       >
         Выбрать модель
       </button>
       <button
-          class="order__btn__back"
-          @click="toggleMobileOrder"
+        class="order__btn__back"
+        @click="toggleMobileOrder"
       >Назад
       </button>
     </div>
   </div>
   <div class="order__mobile">
     <button
-        class="order__mobile__button"
-        v-if="!isMobileOrder"
-        @click="toggleMobileOrder"
+      class="order__mobile__button"
+      v-if="!isMobileOrder"
+      @click="toggleMobileOrder"
     >
       Детали заказа
     </button>
@@ -72,6 +56,11 @@ export default {
       this.isMobileOrder = !this.isMobileOrder;
     },
   },
+  computed: {
+    items() {
+      return this.$store.state.orderCardItems;
+    }
+  }
 };
 </script>
 
@@ -241,6 +230,7 @@ export default {
 
     &__btn {
       margin-left: 64px;
+
       &__back {
         display: block;
         margin-left: 64px;
