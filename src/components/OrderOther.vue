@@ -36,8 +36,8 @@
               <div>
                 <input
                   :value="inputValue"
-                  v-on="inputEvents"
                   class="other__date__input"
+                  v-on="inputEvents"
                 />
               </div>
             </template>
@@ -46,16 +46,16 @@
             По
           </div>
           <date-picker
-            mode="dateTime"
             v-model="range.end"
+            mode="dateTime"
             color="green"
           >
             <template v-slot="{ inputValue, inputEvents }">
               <div>
                 <input
                   :value="inputValue"
-                  v-on="inputEvents"
                   class="other__date__input"
+                  v-on="inputEvents"
                 />
               </div>
             </template>
@@ -99,7 +99,8 @@
             <div
               :class="{'active': service.isActive}"
               class="other__services__title"
-            >{{ service.text }}
+            >
+              {{ service.text }}
             </div>
             <input
               :checked="service.isActive"
@@ -177,16 +178,16 @@ export default {
   },
   methods: {
     selectColor(color) {
-      const prevActiveColor = this.colors.find(c => c.isActive);
-      prevActiveColor.isActive = false;
-      const currentActiveColor = this.colors.find(c => c === color);
-      currentActiveColor.isActive = true;
+      this.colors.forEach((c) => c.isActive = false);
+      const indexOfSelectedColor = this.colors.indexOf(color);
+      color.isActive = true;
+      this.colors.splice(indexOfSelectedColor, 1, color);
     },
     selectRate(rate) {
-      const prevActiveRate = this.rates.find(c => c.isActive);
-      prevActiveRate.isActive = false;
-      const currentActiveRate = this.rates.find(c => c === rate);
-      currentActiveRate.isActive = true;
+      this.rates.forEach((r) => r.isActive = false);
+      const indexOfSelectedRate = this.rates.indexOf(rate);
+      rate.isActive = true;
+      this.rates.splice(indexOfSelectedRate, 1, rate);
     },
     toggleService(service) {
       const currentService = this.services.find(s => s === service);
