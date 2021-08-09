@@ -63,7 +63,12 @@ import OrderTotal from "@/components/OrderTotal";
 
 export default {
   name: "OrderPage",
-  components: {OrderTotal, OrderCars, VSvg, OrderLocation},
+  components: {
+    OrderTotal,
+    OrderCars,
+    VSvg,
+    OrderLocation
+  },
   data() {
     return {
       isPopupOpen: false,
