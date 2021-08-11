@@ -6,9 +6,9 @@
     <div class="order__title">Ваш заказ:</div>
     <div class="order__list">
       <div
-        class="order__list__item"
         v-for="item in items"
         :key="item.name"
+        class="order__list__item"
       >
         <div class="order__list__name">{{ item.name }}</div>
         <div class="order__list__dots"></div>
