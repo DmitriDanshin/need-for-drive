@@ -1,5 +1,4 @@
 <template>
-
   <div class="total">
     <div class="total__wrapper">
       <div class="total__info">

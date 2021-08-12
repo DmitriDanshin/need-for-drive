@@ -79,6 +79,9 @@ import OrderCard from "@/components/OrderCard";
 export default {
   name: "OrderCars",
   components: {OrderCard},
+  methods: {
+    nextPage() {
+      this.$emit("next-page");
   data() {
     return {
       carModels: [

@@ -36,15 +36,17 @@
     </div>
     <div class="order__btn__wrapper">
       <button
-          disabled
-          class="order__btn"
+        :disabled="disabled"
+        class="order__btn"
+        @click="nextPage"
       >
-        Выбрать модель
+        {{ btnText }}
       </button>
       <button
-          class="order__btn__back"
-          @click="toggleMobileOrder"
-      >Назад
+        class="order__btn__back"
+        @click="toggleMobileOrder"
+      >
+        Назад
       </button>
     </div>
   </div>
@@ -62,6 +64,17 @@
 <script>
 export default {
   name: "OrderCard",
+  emits: ["next-page"],
+  props: {
+    btnText: {
+      type: String,
+      required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       isMobileOrder: false,
@@ -70,6 +83,9 @@ export default {
   methods: {
     toggleMobileOrder() {
       this.isMobileOrder = !this.isMobileOrder;
+    },
+    nextPage() {
+      this.$emit("next-page");
     },
   },
 };
