@@ -71,22 +71,22 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
-import { APIFactory } from "@/APIFactory";
+import {APIFactory} from "@/APIFactory";
 
 export default {
   name: "OrderLocation",
-  components: { OrderCard },
+  components: {OrderCard},
   async created() {
     const API = new APIFactory();
     try {
-      const { data } = await API.getCities();
+      const {data} = await API.getCities();
       this.cities = data;
     } catch (e) {
       console.error(e);
       this.cities = [];
     }
     try {
-      const { data } = await API.getPoints();
+      const {data} = await API.getPoints();
       this.points = data;
     } catch (e) {
       console.error(e);
@@ -133,6 +133,9 @@ export default {
         this.disabledButton = false;
       }
     },
+    nextPage() {
+      this.$emit("next-page");
+    },
   },
   computed: {
     isEmptyItems() {
@@ -152,11 +155,6 @@ export default {
           point.cityId?.id === this.selectedCity.id
         );
       });
-    },
-  },
-  methods: {
-    nextPage() {
-      this.$emit("next-page");
     },
   },
 };
