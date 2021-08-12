@@ -6,7 +6,7 @@
     <div class="order__title">Ваш заказ:</div>
     <div class="order__list">
       <div
-        v-for="item in items"
+        v-for="item in orderCardItems"
         :key="item.name"
         class="order__list__item"
       >
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
   name: "OrderCard",
   props: {
@@ -72,9 +73,7 @@ export default {
     },
   },
   computed: {
-    items() {
-      return this.$store.state.orderCardItems;
-    }
+    ...mapState(['orderCardItems']),
   }
 };
 </script>

@@ -70,7 +70,6 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
-import { setItemInStore } from "@/components/mixins/setItemInStore";
 import { APIFactory } from "@/APIFactory";
 
 export default {
@@ -116,21 +115,19 @@ export default {
     selectCity(city) {
       this.searchCity = city.name;
       this.toggleCitiesFocus();
-      setItemInStore(
-        "Пункт выдачи",
-        `${this.searchCity}, ${this.searchPoint}`,
-        this
-      );
+      this.$store.commit("setItem", {
+        name: "Пункт выдачи",
+        value: `${this.searchCity}, ${this.searchPoint}`,
+      });
       this.selectedCity = city;
     },
     selectPoint(point) {
       this.searchPoint = point.address;
       this.togglePointsFocus();
-      setItemInStore(
-        "Пункт выдачи",
-        `${this.searchCity}, ${this.searchPoint}`,
-        this
-      );
+      this.$store.commit("setItem", {
+        name: "Пункт выдачи",
+        value: `${this.searchCity}, ${this.searchPoint}`,
+      });
       if (!this.isEmptyItems) {
         this.disabledButton = false;
       }
