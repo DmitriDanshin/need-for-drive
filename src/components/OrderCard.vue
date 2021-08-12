@@ -36,8 +36,8 @@
   </div>
   <div class="order__mobile">
     <button
-      class="order__mobile__button"
       v-if="!isMobileOrder"
+      class="order__mobile__button"
       @click="toggleMobileOrder"
     >
       Детали заказа
@@ -48,7 +48,6 @@
 <script>
 export default {
   name: "OrderCard",
-  emits: ["next-page"],
   props: {
     btnText: {
       type: String,

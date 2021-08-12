@@ -62,8 +62,8 @@
       </div>
     </div>
     <order-card
-      :btn-text="'Выбрать модель'"
       :disabled="disabledButton"
+      btn-text="Выбрать модель"
     />
   </div>
 </template>
@@ -77,11 +77,20 @@ export default {
   name: "OrderLocation",
   components: {OrderCard},
   async created() {
-    this.cities = await getCities();
-    this.cities = this.cities.data;
-    this.points = await getPoints();
-    this.points = this.points.data;
-
+    try {
+      const {data} = await getCities();
+      this.cities = data;
+    } catch (e) {
+      console.error(e);
+      this.cities = [];
+    }
+    try {
+      const {data} = await getPoints();
+      this.points = data;
+    } catch (e) {
+      console.error(e);
+      this.points = [];
+    }
   },
   data() {
     return {
@@ -121,12 +130,15 @@ export default {
         `${this.searchCity}, ${this.searchPoint}`,
         this
       );
-      if (this.selectedCity.length !== 0 && this.searchPoint.length !== 0) {
+      if (!this.isEmptyItems) {
         this.disabledButton = false;
       }
     },
   },
   computed: {
+    isEmptyItems() {
+      return this.selectedCity.length && this.searchPoint.length;
+    },
     filteredCities() {
       return this.cities.filter((city) =>
         city.name?.toLowerCase().includes(this.searchCity.toLowerCase())
