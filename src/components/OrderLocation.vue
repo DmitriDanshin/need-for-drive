@@ -70,22 +70,23 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
-import {setItemInStore} from "@/components/mixins/setItemInStore";
-import {getCities, getPoints} from "@/APIFactory";
+import { setItemInStore } from "@/components/mixins/setItemInStore";
+import { APIFactory } from "@/APIFactory";
 
 export default {
   name: "OrderLocation",
-  components: {OrderCard},
+  components: { OrderCard },
   async created() {
+    const API = new APIFactory();
     try {
-      const {data} = await getCities();
+      const { data } = await API.getCities();
       this.cities = data;
     } catch (e) {
       console.error(e);
       this.cities = [];
     }
     try {
-      const {data} = await getPoints();
+      const { data } = await API.getPoints();
       this.points = data;
     } catch (e) {
       console.error(e);
