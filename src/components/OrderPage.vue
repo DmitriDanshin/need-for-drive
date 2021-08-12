@@ -1,4 +1,24 @@
 <template>
+  <div
+    v-if="isPopupOpen"
+    class="popup"
+  >
+    <div class="popup__bg"></div>
+    <div class="popup__wrapper">
+      <div class="popup__msg">Подтвердить заказ</div>
+      <div class="popup__buttons">
+        <button class="popup__button">
+          Подтвердить
+        </button>
+        <button
+          class="popup__button"
+          @click="togglePopup"
+        >
+          Вернуться
+        </button>
+      </div>
+    </div>
+  </div>
   <section class="order">
     <div class="order__header">
       <h2 class="order__header__title title fz-30">Need for drive</h2>
@@ -47,6 +67,7 @@ export default {
   components: {OrderTotal, OrderOther, OrderCars, VSvg, OrderLocation},
   data() {
     return {
+     isPopupOpen: false,
       pages: [
         {
           title: "Местоположение",
@@ -103,6 +124,9 @@ export default {
 
       this.currentPage = nextPage.pageName;
     },
+    togglePopup() {
+      this.isPopupOpen = !this.isPopupOpen;
+    }
   },
 };
 </script>
@@ -113,15 +137,68 @@ export default {
 @import "../scss/fonts";
 @import "../scss/mixins";
 
+.popup {
+
+  &__wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__msg {
+    margin-bottom: 150px;
+    z-index: 6;
+    @include text;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: $white;
+    opacity: 0.5;
+    z-index: 5;
+  }
+
+  &__buttons {
+    position: absolute;
+    display: flex;
+    z-index: 5;
+  }
+
+  &__button {
+    @include button();
+    margin-right: 10px;
+
+    &:last-child {
+      background: linear-gradient(90deg, #493013 0%, #7B0C3B 100%);
+    }
+  }
+
+}
+
 .order {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  overflow-y: auto;
 
   &__header {
     padding: 32px 64px 32px 128px;
+    z-index: 3;
     border-bottom: 1px solid $gray-light;
     display: flex;
     justify-content: space-between;
@@ -198,7 +275,25 @@ export default {
 
 // mobile
 @media screen and (min-width: 320px) and (max-width: 767px) {
+  .popup {
+    &__buttons {
+      flex-direction: column;
+    }
+
+    &__button {
+      margin-right: 0;
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+
+    &__msg {
+      margin-bottom: 180px;
+    }
+  }
   .order {
+    height: 100%;
+    overflow-y: hidden;
+
     &__header {
       padding: 32px 5px 24px 64px;
     }

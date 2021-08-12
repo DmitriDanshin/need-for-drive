@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="{ 'order-active': isMobileOrder }"
-    class="order"
+      :class="{ 'order-active': isMobileOrder }"
+      class="order"
   >
     <div class="order__title">Ваш заказ:</div>
     <div class="order__list">
@@ -52,9 +52,9 @@
   </div>
   <div class="order__mobile">
     <button
-      class="order__mobile__button"
-      v-if="!isMobileOrder"
-      @click="toggleMobileOrder"
+        class="order__mobile__button"
+        v-if="!isMobileOrder"
+        @click="toggleMobileOrder"
     >
       Детали заказа
     </button>
@@ -231,6 +231,68 @@ export default {
       margin-top: 8px;
       padding-right: 12px;
       padding-left: 12px;
+    }
+  }
+}
+
+// tablet
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .order {
+    position: absolute;
+    left: 0;
+    background-color: $white;
+    width: 100%;
+    display: none;
+
+    &-active {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      visibility: visible;
+      padding-top: 0;
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    &__btn {
+      margin-left: 64px;
+      &__back {
+        display: block;
+        margin-left: 64px;
+      }
+
+      &__wrapper {
+        width: 100%;
+      }
+    }
+
+    &__mobile {
+      display: block;
+      position: absolute;
+      bottom: 10%;
+      width: 100%;
+      &__button{
+        margin-left: 64px;
+      }
+    }
+
+    &__title {
+      text-align: left;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    &__price {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    &__list {
+      width: 80%;
+      padding-left: 0;
+      padding-right: 5%;
+
     }
   }
 }

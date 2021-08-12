@@ -126,7 +126,7 @@ export default {
   display: grid;
   grid-template-columns: 3fr auto;
   padding-top: 32px;
-  height: 100%;
+  overflow-y: hidden;
 }
 
 .map {
