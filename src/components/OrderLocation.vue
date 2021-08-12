@@ -50,11 +50,17 @@
       <div class="map__position">
         <div class="map__position__title">Выбрать на карте:</div>
         <div class="map__position__display">
-          <img src="../assets/map.png" alt="map" />
+          <img
+            src="../assets/map.png"
+            alt="map"
+          />
         </div>
       </div>
     </div>
-    <order-card />
+    <order-card
+      btn-text="Выбрать модель"
+      @next-page="nextPage"
+    />
   </div>
 </template>
 
@@ -63,7 +69,8 @@ import OrderCard from "@/components/OrderCard";
 
 export default {
   name: "OrderLocation",
-  components: { OrderCard },
+  components: {OrderCard},
+  emits: ["next-page"],
   data() {
     return {
       searchPoint: "",
@@ -100,6 +107,11 @@ export default {
       );
     },
   },
+  methods: {
+    nextPage() {
+      this.$emit("next-page");
+    },
+  },
 };
 </script>
 
@@ -114,7 +126,7 @@ export default {
   display: grid;
   grid-template-columns: 3fr auto;
   padding-top: 32px;
-  height: 100%;
+  overflow-y: hidden;
 }
 
 .map {

@@ -111,7 +111,10 @@
         </div>
       </div>
     </div>
-    <order-card/>
+    <order-card
+      btn-text="Итого"
+      @next-page="nextPage"
+    />
   </div>
 </template>
 
@@ -194,6 +197,14 @@ export default {
       currentService.isActive = !currentService.isActive;
     }
   }
+export default {
+  name: "OrderOther",
+  components: {OrderCard},
+  methods: {
+    nextPage() {
+      this.$emit("next-page");
+    },
+  },
 };
 </script>
 
@@ -412,5 +423,8 @@ export default {
     }
 
   }
+}
+</style>
+  padding-top: 32px;
 }
 </style>
