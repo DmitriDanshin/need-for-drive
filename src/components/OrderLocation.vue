@@ -64,6 +64,7 @@
     <order-card
       :disabled="disabledButton"
       btn-text="Выбрать модель"
+      @next-page="nextPage"
     />
   </div>
 </template>
@@ -151,6 +152,11 @@ export default {
           point.cityId?.id === this.selectedCity.id
         );
       });
+    },
+  },
+  methods: {
+    nextPage() {
+      this.$emit("next-page");
     },
   },
 };
