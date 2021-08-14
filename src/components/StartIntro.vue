@@ -4,7 +4,7 @@
       <h2 class="intro__title title fz-30">Need for drive</h2>
       <div class="intro__city">
         <div class="intro__city-icon">
-          <v-svg name="city-icon" />
+          <v-svg name="city-icon"/>
         </div>
         <span class="intro__city-title">Ульяновск</span>
       </div>
@@ -15,7 +15,11 @@
       <h3 class="title fz-26 intro__center__title">
         Поминутная аренда авто твоего города
       </h3>
-      <button class="intro__btn" @click="makeOrder">Забронировать</button>
+      <button
+        class="intro__btn"
+        @click="makeOrder"
+      >Забронировать
+      </button>
     </div>
     <div class="intro__bottom">
       <div class="intro__copyright">© 2016-2019 «Need for drive»</div>
@@ -29,7 +33,7 @@ import VSvg from "@/components/v-svg";
 
 export default {
   name: "StartIntro",
-  components: { VSvg },
+  components: {VSvg},
   emits: ["make-order"],
   methods: {
     makeOrder() {

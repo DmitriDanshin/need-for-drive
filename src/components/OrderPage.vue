@@ -30,28 +30,28 @@
       </div>
     </div>
     <div class="order__nav">
-      <div class="order__nav__item">
-        <div class="order__nav__item__text order__nav__item__text-active">
-          Местоположение
+      <div
+        v-for="page in pages"
+        :key="page.id"
+        class="order__nav__item"
+      >
+        <div
+          :class="{
+                active: page.isActive,
+                done: page.isDone && !page.isActive,
+            }"
+          class="order__nav__item__text"
+          @click="selectPage(page)"
+        >
+          {{ page.title }}
         </div>
         <v-svg name="next-arrow"/>
       </div>
-      <div class="order__nav__item">
-        <div class="order__nav__item__text">Модель</div>
-        <v-svg name="next-arrow"/>
-      </div>
-      <div class="order__nav__item">
-        <div class="order__nav__item__text">Дополнительно</div>
-        <v-svg name="next-arrow"/>
-      </div>
-      <div class="order__nav__item">
-        <div class="order__nav__item__text">Итого</div>
-        <v-svg name="next-arrow"/>
-      </div>
     </div>
-    <order-location v-if="false"/>
-    <order-cars v-if="false"/>
-    <order-total/>
+    <component
+      :is="currentPage"
+      @next-page="nextPage"
+    />
   </section>
 </template>
 
@@ -59,26 +59,75 @@
 import OrderLocation from "@/components/OrderLocation";
 import VSvg from "@/components/v-svg";
 import OrderCars from "@/components/OrderCars";
+import OrderOther from "@/components/OrderOther";
 import OrderTotal from "@/components/OrderTotal";
 
 export default {
   name: "OrderPage",
-  components: {
-    OrderTotal,
-    OrderCars,
-    VSvg,
-    OrderLocation
-  },
+  components: {OrderTotal, OrderOther, OrderCars, VSvg, OrderLocation},
   data() {
     return {
-      isPopupOpen: false,
+     isPopupOpen: false,
+      pages: [
+        {
+          title: "Местоположение",
+          pageName: "OrderLocation",
+          id: 0,
+          isActive: true,
+          isDone: true,
+        },
+        {
+          title: "Модель",
+          pageName: "OrderCars",
+          id: 1,
+          isActive: false,
+          isDone: false,
+        },
+        {
+          title: "Дополнительно",
+          pageName: "OrderOther",
+          id: 2,
+          isActive: false,
+          isDone: false,
+        },
+        {
+          title: "Итого",
+          pageName: "OrderTotal",
+          id: 3,
+          isActive: false,
+          isDone: false,
+        },
+      ],
+      currentPage: "OrderLocation",
     };
   },
   methods: {
+    selectPage(page) {
+      if (page.isDone) {
+        const activePage = this.pages.find((page) => page.isActive);
+        this.currentPage = page.pageName;
+        activePage.isActive = false;
+        page.isActive = true;
+      }
+    },
+    nextPage() {
+      const currentPage = this.pages.find((page) => page.isActive);
+      if (currentPage.id === this.pages.length - 1) {
+        return;
+      }
+
+      currentPage.isActive = false;
+      currentPage.isDone = true;
+
+      const nextPage = this.pages.find((page) => page.id === currentPage.id + 1);
+      nextPage.isActive = true;
+
+      this.currentPage = nextPage.pageName;
+    },
     togglePopup() {
       this.isPopupOpen = !this.isPopupOpen;
     }
-  }
+  },
 };
 </script>
 
@@ -204,20 +253,21 @@ export default {
         width: 6px;
       }
 
-      &__text {
-        font-family: Roboto, serif;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 16px;
-        color: $gray;
+      .active {
+        cursor: default;
+        color: $main-accent;
+      }
 
+      .done {
         cursor: pointer;
+        color: $black;
+      }
 
-        &-active {
-          cursor: default;
-          color: $main-accent;
-        }
+      &__text {
+        @include text();
+        font-weight: bold;
+        color: $gray;
+        cursor: not-allowed;
       }
     }
   }
