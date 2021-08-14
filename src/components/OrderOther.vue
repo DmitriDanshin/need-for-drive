@@ -195,16 +195,11 @@ export default {
     toggleService(service) {
       const currentService = this.services.find(s => s === service);
       currentService.isActive = !currentService.isActive;
-    }
-  }
-export default {
-  name: "OrderOther",
-  components: {OrderCard},
-  methods: {
+    },
     nextPage() {
       this.$emit("next-page");
     },
-  },
+  }
 };
 </script>
 
@@ -424,7 +419,5 @@ export default {
 
   }
 }
-</style>
-  padding-top: 32px;
-}
+
 </style>

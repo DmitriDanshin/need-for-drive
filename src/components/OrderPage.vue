@@ -65,7 +65,6 @@ import OrderTotal from "@/components/OrderTotal";
 export default {
   name: "OrderPage",
   components: { OrderTotal,
-               OrderOther,
                OrderCars, 
                VSvg,
                OrderLocation,
