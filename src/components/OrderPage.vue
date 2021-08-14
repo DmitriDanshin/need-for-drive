@@ -7,15 +7,11 @@
     <div class="popup__wrapper">
       <div class="popup__msg">Подтвердить заказ</div>
       <div class="popup__buttons">
-        <button class="popup__button">
-          Подтвердить
-        </button>
+        <button class="popup__button">Подтвердить</button>
         <button
           class="popup__button"
           @click="togglePopup"
-        >
-          Вернуться
-        </button>
+        >Вернуться</button>
       </div>
     </div>
   </div>
@@ -24,7 +20,7 @@
       <h2 class="order__header__title title fz-30">Need for drive</h2>
       <div class="order__header__city">
         <div class="order__header__city-icon">
-          <v-svg name="city-icon"/>
+          <v-svg name="city-icon" />
         </div>
         <span class="order__header__city-title">Ульяновск</span>
       </div>
@@ -37,15 +33,15 @@
       >
         <div
           :class="{
-                active: page.isActive,
-                done: page.isDone && !page.isActive,
-            }"
+            active: page.isActive,
+            done: page.isDone && !page.isActive,
+          }"
           class="order__nav__item__text"
           @click="selectPage(page)"
         >
           {{ page.title }}
         </div>
-        <v-svg name="next-arrow"/>
+        <v-svg name="next-arrow" />
       </div>
     </div>
     <component
@@ -64,15 +60,10 @@ import OrderTotal from "@/components/OrderTotal";
 
 export default {
   name: "OrderPage",
-  components: { OrderTotal,
-               OrderCars, 
-               VSvg,
-               OrderLocation,
-               OrderOther
-               },
+  components: { OrderTotal, OrderCars, VSvg, OrderLocation, OrderOther },
   data() {
     return {
-     isPopupOpen: false,
+      isPopupOpen: false,
       pages: [
         {
           title: "Местоположение",
@@ -124,14 +115,16 @@ export default {
       currentPage.isActive = false;
       currentPage.isDone = true;
 
-      const nextPage = this.pages.find((page) => page.id === currentPage.id + 1);
+      const nextPage = this.pages.find(
+        (page) => page.id === currentPage.id + 1
+      );
       nextPage.isActive = true;
 
       this.currentPage = nextPage.pageName;
     },
     togglePopup() {
       this.isPopupOpen = !this.isPopupOpen;
-    }
+    },
   },
 };
 </script>
@@ -143,7 +136,6 @@ export default {
 @import "../scss/mixins";
 
 .popup {
-
   &__wrapper {
     position: absolute;
     top: 0;
@@ -187,10 +179,9 @@ export default {
     margin-right: 10px;
 
     &:last-child {
-      background: linear-gradient(90deg, #493013 0%, #7B0C3B 100%);
+      background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
     }
   }
-
 }
 
 .order {
