@@ -1,6 +1,12 @@
 <template>
   <div class="cars">
-    <div>
+    <div
+      v-if="isFail"
+      class="title"
+    >
+      Не удалось подключиться к серверу.
+    </div>
+    <div v-if="!isFail">
       <div
         v-if="!isLoading"
         class="cars__select"
@@ -40,7 +46,7 @@
           </div>
           <div class="cars__catalog__item__car">
             <img
-              :src="car.thumbnail.path"
+              :src="makeCarPath(car.thumbnail.path)"
               :alt="car.name"
             />
           </div>
@@ -56,11 +62,11 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
-import { APIFactory } from "@/APIFactory";
+import {APIFactory} from "@/APIFactory";
 
 export default {
   name: "OrderCars",
-  components: { OrderCard },
+  components: {OrderCard},
   data() {
     return {
       carsCategories: [],
@@ -68,26 +74,27 @@ export default {
       selectedCarId: "",
       cars: [],
       isLoading: true,
+      isFail: false,
     };
   },
   async created() {
     const API = new APIFactory();
     try {
-      const { data } = await API.getCars();
+      const {data} = await API.getCars();
       this.cars = data;
       this.isLoading = false;
     } catch (e) {
-      console.error(e);
+      this.isFail = true;
       this.cars = [];
       this.isLoading = false;
     }
     try {
-      const { data } = await API.getCarsCategories();
+      const {data} = await API.getCarsCategories();
       this.carsCategories = data;
       this.selectedCarCategoryId = data[0].id;
       this.isLoading = false;
     } catch (e) {
-      console.error(e);
+      this.isFail = true;
       this.carsCategories = [];
       this.isLoading = false;
     }
@@ -95,6 +102,13 @@ export default {
   methods: {
     nextPage() {
       this.$emit("next-page");
+    },
+    makeCarPath(path) {
+      if (path.includes("data:image")) {
+        return path;
+      } else {
+        return 'https://api-factory.simbirsoft1.com' + path;
+      }
     },
     selectCarCategory(id) {
       this.selectedCarCategoryId = id;
@@ -223,8 +237,8 @@ export default {
         align-self: flex-end;
 
         img {
-          width: 70%;
-          height: 70%;
+          width: 256px;
+          height: 116px;
         }
       }
 
