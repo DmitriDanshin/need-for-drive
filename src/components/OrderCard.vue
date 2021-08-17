@@ -1,38 +1,22 @@
 <template>
   <div
-      :class="{ 'order-active': isMobileOrder }"
-      class="order"
+    :class="{ 'order-active': isMobileOrder }"
+    class="order"
   >
     <div class="order__title">Ваш заказ:</div>
     <div class="order__list">
-      <div class="order__list__item">
-        <div class="order__list__name">Пункт выдачи</div>
+      <div
+        v-for="item in orderCardItems"
+        :key="item.name"
+        class="order__list__item"
+      >
+        <div class="order__list__name">{{ item.name }}</div>
         <div class="order__list__dots"></div>
-        <div class="order__list__value">Ульяновск, Нариманова 42</div>
-      </div>
-      <div class="order__list__item">
-        <div class="order__list__name">Модель</div>
-        <div class="order__list__dots"></div>
-        <div class="order__list__value">Hyndai, i30 N</div>
-      </div>
-      <div class="order__list__item">
-        <div class="order__list__name">Цвет</div>
-        <div class="order__list__dots"></div>
-        <div class="order__list__value">Голубой</div>
-      </div>
-      <div class="order__list__item">
-        <div class="order__list__name">Длительность аренды</div>
-        <div class="order__list__dots"></div>
-        <div class="order__list__value">1д 2ч</div>
-      </div>
-      <div class="order__list__item">
-        <div class="order__list__name">Полный бак</div>
-        <div class="order__list__dots"></div>
-        <div class="order__list__value">Да</div>
+        <div class="order__list__value">{{ item.value }}</div>
       </div>
     </div>
     <div class="order__price">
-      <div><span>Цена:</span> от 8 000 до 12 000 ₽</div>
+      <div><span>Цена:</span></div>
     </div>
     <div class="order__btn__wrapper">
       <button
@@ -52,9 +36,9 @@
   </div>
   <div class="order__mobile">
     <button
-        class="order__mobile__button"
-        v-if="!isMobileOrder"
-        @click="toggleMobileOrder"
+      v-if="!isMobileOrder"
+      class="order__mobile__button"
+      @click="toggleMobileOrder"
     >
       Детали заказа
     </button>
@@ -62,9 +46,9 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
   name: "OrderCard",
-  emits: ["next-page"],
   props: {
     btnText: {
       type: String,
@@ -88,6 +72,9 @@ export default {
       this.$emit("next-page");
     },
   },
+  computed: {
+    ...mapState(['orderCardItems']),
+  }
 };
 </script>
 
@@ -118,7 +105,6 @@ export default {
 
   &__price {
     margin-top: 32px;
-
     @include text();
     font-weight: 400;
     font-size: 16px;
@@ -134,7 +120,6 @@ export default {
     font-weight: 500;
     font-size: 18px;
     text-align: right;
-
     color: $black;
   }
 

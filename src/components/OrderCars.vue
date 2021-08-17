@@ -3,16 +3,16 @@
     <div>
       <div class="cars__select">
         <div
-            v-for="carModel in carModels"
-            :key="carModel.id"
-            :class="{ active: carModel.isSelected }"
-            class="cars__select__item"
+          v-for="carModel in carModels"
+          :key="carModel.id"
+          :class="{ active: carModel.isSelected }"
+          class="cars__select__item"
         >
           <div class="cars__select__title">{{ carModel.title }}</div>
           <input
-              type="radio"
-              name="cars"
-              @change="selectCarModel(carModel.id)"
+            type="radio"
+            name="cars"
+            @change="selectCarModel(carModel.id)"
           />
         </div>
       </div>
@@ -22,8 +22,8 @@
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
             <img
-                src="../assets/cars/elantra.png"
-                alt=""
+              src="../assets/cars/elantra.png"
+              alt=""
             />
           </div>
         </div>
@@ -32,8 +32,8 @@
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
             <img
-                src="../assets/cars/i30_n.png"
-                alt="i30 N"
+              src="../assets/cars/i30_n.png"
+              alt="i30 N"
             />
           </div>
         </div>
@@ -42,8 +42,8 @@
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
             <img
-                src="../assets/cars/creta.png"
-                alt="creta"
+              src="../assets/cars/creta.png"
+              alt="creta"
             />
           </div>
         </div>
@@ -52,8 +52,8 @@
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
             <img
-                src="../assets/cars/sonata.png"
-                alt=""
+              src="../assets/cars/sonata.png"
+              alt=""
             />
           </div>
         </div>
@@ -62,14 +62,14 @@
           <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
             <img
-                src="../assets/cars/sonata.png"
-                alt="SONATA"
+              src="../assets/cars/sonata.png"
+              alt="SONATA"
             />
           </div>
         </div>
       </div>
     </div>
-    <order-card/>
+    <order-card btn-text="Дополнительно"/>
   </div>
 </template>
 
@@ -79,9 +79,6 @@ import OrderCard from "@/components/OrderCard";
 export default {
   name: "OrderCars",
   components: {OrderCard},
-  methods: {
-    nextPage() {
-      this.$emit("next-page");
   data() {
     return {
       carModels: [
@@ -105,14 +102,17 @@ export default {
     };
   },
   methods: {
+    nextPage() {
+      this.$emit("next-page");
+    },
     selectCarModel(id) {
       const prevSelect = this.carModels.find((model) => model.id === id);
       const currentSelect =
-          this.carModels.find((model) => model.isSelected) ?? prevSelect;
+        this.carModels.find((model) => model.isSelected) ?? prevSelect;
       currentSelect.isSelected = false;
       prevSelect.isSelected = true;
     },
-  },
+  }
 };
 </script>
 
