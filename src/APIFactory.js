@@ -6,11 +6,11 @@ export class APIFactory {
     type: "GET",
   };
 
-  async getCities() {
-    return await fetch("/city", this.init).then((r) => r.json());
+  async getCars() {
+    return await fetch("/car", this.init).then((r) => r.json());
   }
 
-  async getPoints() {
-    return await fetch("/point", this.init).then((r) => r.json());
+  async getCarsCategories() {
+    return await fetch("/category", this.init).then((r) => r.json());
   }
 }

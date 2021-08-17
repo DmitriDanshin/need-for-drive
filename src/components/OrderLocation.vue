@@ -10,19 +10,17 @@
             v-model="searchCity"
             placeholder="Начните вводить город ..."
             type="search"
-            @focus="toggleCitiesFocus"
           />
           <div
-            :class="{ active: filteredCities && citiesFocus }"
             class="map__search__autocomplete__list"
+            :class="{ active: filteredCities.length }"
           >
             <div
               v-for="city in filteredCities"
               :key="city"
               class="map__search__autocomplete__item"
-              @click="selectCity(city)"
             >
-              {{ city.name }}
+              {{ city }}
             </div>
           </div>
         </div>
@@ -34,19 +32,17 @@
             v-model="searchPoint"
             placeholder="Начните вводить пункт ..."
             type="search"
-            @focus="togglePointsFocus"
           />
           <div
-            :class="{ active: filteredPoints && pointsFocus }"
             class="map__search__autocomplete__list"
+            :class="{ active: filteredPoints.length }"
           >
             <div
               v-for="point in filteredPoints"
               :key="point"
               class="map__search__autocomplete__item"
-              @click="selectPoint(point)"
             >
-              {{ point.address }}
+              {{ point }}
             </div>
           </div>
         </div>
@@ -54,27 +50,14 @@
       <div class="map__position">
         <div class="map__position__title">Выбрать на карте:</div>
         <div class="map__position__display">
-          <GMapMap
-            :center="center"
-            :zoom="10"
-            map-type-id="terrain"
-          >
-            <GMapCluster :zoomOnClick="true">
-              <GMapMarker
-                :key="index"
-                v-for="(m, index) in markers"
-                :position="m.position"
-                :clickable="true"
-                :draggable="false"
-                @click="center = m.position"
-              />
-            </GMapCluster>
-          </GMapMap>
+          <img
+            src="../assets/map.png"
+            alt="map"
+          />
         </div>
       </div>
     </div>
     <order-card
-      :disabled="disabledButton"
       btn-text="Выбрать модель"
       @next-page="nextPage"
     />
@@ -83,117 +66,50 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
-import {APIFactory} from "@/APIFactory";
 
 export default {
   name: "OrderLocation",
   components: {OrderCard},
-  async created() {
-    const API = new APIFactory();
-    try {
-      const {data} = await API.getCities();
-      this.cities = data;
-    } catch (e) {
-      console.error(e);
-      this.cities = [];
-    }
-    try {
-      const {data} = await API.getPoints();
-      this.points = data;
-    } catch (e) {
-      console.error(e);
-      this.points = [];
-    }
-  },
+  emits: ["next-page"],
   data() {
     return {
       searchPoint: "",
-      citiesFocus: false,
-      pointsFocus: false,
       searchCity: "",
-      cities: [],
-      points: [],
-      selectedCity: {},
-      disabledButton: true,
-      center: {lat: 51.093048, lng: 6.84212},
-      markers: [
-        {
-          position: {
-            lat: 51.093048,
-            lng: 6.84212
-          }
-        },
-        {
-          position: {
-            lat: 51.198429,
-            lng: 6.69529
-          }
-        },
-        {
-          position: {
-            lat: 51.165218,
-            lng: 7.067116
-          }
-        },
-        {
-          position: {
-            lat: 51.09256,
-            lng: 6.84074
-          }
-        }
-      ]
+      cities: [
+        "Уфа",
+        "Москва",
+        "Санкт-Петербург",
+        "Томск",
+        "Самара",
+        "Тольятти",
+        "Тюмень",
+      ],
+      points: [
+        "Улица 1",
+        "Улица 2",
+        "Улица 3",
+        "Улица 4",
+        "Улица 5",
+        "Улица 6",
+        "Улица 7",
+      ],
     };
   },
-  methods: {
-    toggleCitiesFocus() {
-      this.citiesFocus = !this.citiesFocus;
-    },
-    togglePointsFocus() {
-      this.pointsFocus = !this.pointsFocus;
-    },
-
-    selectCity(city) {
-      this.searchCity = city.name;
-      this.toggleCitiesFocus();
-      this.$store.commit("setItem", {
-        name: "Пункт выдачи",
-        value: `${this.searchCity}, ${this.searchPoint}`,
-      });
-      this.selectedCity = city;
-    },
-    selectPoint(point) {
-      this.searchPoint = point.address;
-      this.togglePointsFocus();
-      this.$store.commit("setItem", {
-        name: "Пункт выдачи",
-        value: `${this.searchCity}, ${this.searchPoint}`,
-      });
-      if (!this.isEmptyItems) {
-        this.disabledButton = false;
-      }
-    },
-    nextPage() {
-      this.$emit("next-page");
-    },
-  },
   computed: {
-    isEmptyItems() {
-      return this.selectedCity.length && this.searchPoint.length;
-    },
     filteredCities() {
       return this.cities.filter((city) =>
-        city.name?.toLowerCase().includes(this.searchCity.toLowerCase())
+        city.toLowerCase().includes(this.searchCity.toLowerCase())
       );
     },
     filteredPoints() {
-      return this.points.filter((point) => {
-        return (
-          point.address
-            ?.toLowerCase()
-            .includes(this.searchPoint.toLowerCase()) &&
-          point.cityId?.id === this.selectedCity.id
-        );
-      });
+      return this.points.filter((point) =>
+        point.toLowerCase().includes(this.searchPoint.toLowerCase())
+      );
+    },
+  },
+  methods: {
+    nextPage() {
+      this.$emit("next-page");
     },
   },
 };
@@ -227,15 +143,19 @@ export default {
       position: relative;
       display: inline-block;
 
-      .active {
-        visibility: visible;
+      input {
+        &:focus {
+          & + .active {
+            visibility: visible;
+          }
+        }
       }
 
       &__list {
         visibility: hidden;
         max-height: 106px;
         overflow-y: auto;
-        z-index: 5;
+        z-index: 1;
         left: 0;
         width: 95%;
         position: absolute;
@@ -313,11 +233,6 @@ export default {
 
     &__display {
       margin-top: 8px;
-      width: 60%;
-
-      .vue-map-container {
-        height: 450px;
-      }
     }
   }
 }
@@ -329,10 +244,11 @@ export default {
       align-items: center;
 
       &__display {
-        width: 100%;
+        display: flex;
+        justify-content: center;
 
-        .vue-map-container {
-          height: 280px;
+        img {
+          width: 100%;
         }
       }
     }
@@ -360,10 +276,8 @@ export default {
   .map {
     &__position {
       &__display {
-        width: 100%;
-
-        .vue-map-container {
-          height: 280px;
+        img {
+          width: 100%;
         }
       }
     }
