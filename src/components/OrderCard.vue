@@ -21,6 +21,7 @@
     <div class="order__btn__wrapper">
       <button
         :disabled="disabled"
+        :class="{ active: isDone }"
         class="order__btn"
         @click="nextPage"
       >
@@ -30,8 +31,7 @@
         class="order__btn__back"
         @click="toggleMobileOrder"
       >
-        Назад
-      </button>
+        Назад</button>
     </div>
   </div>
   <div class="order__mobile">
@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapGetters, mapState } from "vuex";
+
 export default {
   name: "OrderCard",
   props: {
@@ -73,8 +74,9 @@ export default {
     },
   },
   computed: {
-    ...mapState(['orderCardItems']),
-  }
+    ...mapState(["orderCardItems"]),
+    ...mapGetters(["isDone"]),
+  },
 };
 </script>
 
@@ -148,10 +150,13 @@ export default {
       color: $gray;
     }
   }
-
+  .active {
+    background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
+  }
   &__btn {
     margin-top: 32px;
     @include button();
+
     border-radius: 0;
     width: 100%;
 
@@ -242,6 +247,7 @@ export default {
 
     &__btn {
       margin-left: 64px;
+
       &__back {
         display: block;
         margin-left: 64px;
@@ -257,7 +263,8 @@ export default {
       position: absolute;
       bottom: 10%;
       width: 100%;
-      &__button{
+
+      &__button {
         margin-left: 64px;
       }
     }
@@ -277,7 +284,6 @@ export default {
       width: 80%;
       padding-left: 0;
       padding-right: 5%;
-
     }
   }
 }

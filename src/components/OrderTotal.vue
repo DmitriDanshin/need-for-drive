@@ -2,6 +2,12 @@
   <div class="total">
     <div class="total__wrapper">
       <div class="total__info">
+        <div
+          v-if="isDone"
+          class="total__info__status"
+        >
+          Ваш заказ подтверждён
+        </div>
         <div class="total__info__name">Hyndai, i30 N</div>
         <div class="total__info__license">K 761 HA 73</div>
         <div class="total__info__items">
@@ -22,16 +28,20 @@
         />
       </div>
     </div>
-    <order-card/>
+    <order-card :btn-text="isDone ? 'Отменить' : 'Заказать'" />
   </div>
 </template>
 
 <script>
 import OrderCard from "@/components/OrderCard";
+import { mapGetters } from "vuex";
 
 export default {
   name: "OrderTotal",
-  components: {OrderCard},
+  components: { OrderCard },
+  computed: {
+    ...mapGetters(["isDone"]),
+  },
 };
 </script>
 
@@ -63,9 +73,15 @@ export default {
     flex-direction: column;
 
     &__name {
+      margin-top: 16px;
       @include text();
       font-size: 18px;
       color: $black;
+    }
+
+    &__status {
+      @include text();
+      font-size: 24px;
     }
 
     &__license {

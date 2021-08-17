@@ -7,9 +7,7 @@
     <div class="popup__wrapper">
       <div class="popup__msg">Подтвердить заказ</div>
       <div class="popup__buttons">
-        <button class="popup__button">
-          Подтвердить
-        </button>
+        <button class="popup__button">Подтвердить</button>
         <button
           class="popup__button"
           @click="togglePopup"
@@ -24,12 +22,15 @@
       <h2 class="order__header__title title fz-30">Need for drive</h2>
       <div class="order__header__city">
         <div class="order__header__city-icon">
-          <v-svg name="city-icon"/>
+          <v-svg name="city-icon" />
         </div>
         <span class="order__header__city-title">Ульяновск</span>
       </div>
     </div>
-    <div class="order__nav">
+    <div
+      v-if="!isDone"
+      class="order__nav"
+    >
       <div
         v-for="page in pages"
         :key="page.id"
@@ -37,16 +38,22 @@
       >
         <div
           :class="{
-                active: page.isActive,
-                done: page.isDone && !page.isActive,
-            }"
+            active: page.isActive,
+            done: page.isDone && !page.isActive,
+          }"
           class="order__nav__item__text"
           @click="selectPage(page)"
         >
           {{ page.title }}
         </div>
-        <v-svg name="next-arrow"/>
+        <v-svg name="next-arrow" />
       </div>
+    </div>
+    <div
+      v-if="isDone"
+      class="order__nav title fz-14"
+    >
+      Заказ номер RU58491823
     </div>
     <component
       :is="currentPage"
@@ -61,13 +68,14 @@ import VSvg from "@/components/v-svg";
 import OrderCars from "@/components/OrderCars";
 import OrderOther from "@/components/OrderOther";
 import OrderTotal from "@/components/OrderTotal";
+import { mapGetters } from "vuex";
 
 export default {
   name: "OrderPage",
-  components: {OrderTotal, OrderOther, OrderCars, VSvg, OrderLocation},
+  components: { OrderTotal, OrderOther, OrderCars, VSvg, OrderLocation },
   data() {
     return {
-     isPopupOpen: false,
+      isPopupOpen: false,
       pages: [
         {
           title: "Местоположение",
@@ -98,7 +106,7 @@ export default {
           isDone: false,
         },
       ],
-      currentPage: "OrderLocation",
+      currentPage: "OrderTotal",
     };
   },
   methods: {
@@ -119,14 +127,19 @@ export default {
       currentPage.isActive = false;
       currentPage.isDone = true;
 
-      const nextPage = this.pages.find((page) => page.id === currentPage.id + 1);
+      const nextPage = this.pages.find(
+        (page) => page.id === currentPage.id + 1
+      );
       nextPage.isActive = true;
 
       this.currentPage = nextPage.pageName;
     },
     togglePopup() {
       this.isPopupOpen = !this.isPopupOpen;
-    }
+    },
+  },
+  computed: {
+    ...mapGetters(["isDone"]),
   },
 };
 </script>
@@ -138,7 +151,6 @@ export default {
 @import "../scss/mixins";
 
 .popup {
-
   &__wrapper {
     position: absolute;
     top: 0;
@@ -182,10 +194,9 @@ export default {
     margin-right: 10px;
 
     &:last-child {
-      background: linear-gradient(90deg, #493013 0%, #7B0C3B 100%);
+      background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
     }
   }
-
 }
 
 .order {
