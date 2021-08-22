@@ -26,7 +26,7 @@
         <div class="other__date__items">
           <div class="other__date__label">С</div>
           <date-picker
-            v-model="range.start"
+            v-model="start"
             mode="dateTime"
             color="green"
           >
@@ -42,7 +42,7 @@
           </date-picker>
           <div class="other__date__label">По</div>
           <date-picker
-            v-model="range.end"
+            v-model="end"
             mode="dateTime"
             color="green"
           >
@@ -96,7 +96,7 @@
               :class="{ active: service.isActive }"
               class="other__services__title"
             >
-              {{ service.text }}
+              {{ service.text }}, {{ service.price }}р
             </div>
             <input
               :checked="service.isActive"
@@ -155,24 +155,25 @@ export default {
       services: [
         {
           id: 0,
-          text: "Полный бак, 500р",
+          text: "Полный бак",
+          price: 500,
           isActive: false,
         },
         {
           id: 1,
-          text: "Детское кресло, 200р",
+          text: "Детское кресло",
+          price: 200,
           isActive: false,
         },
         {
           id: 2,
-          text: "Правый руль, 1600р",
+          text: "Правый руль",
+          price: 1600,
           isActive: false,
         },
       ],
-      range: {
-        start: new Date(),
-        end: new Date(),
-      },
+      start: new Date(),
+      end: new Date(),
     };
   },
   methods: {
@@ -181,19 +182,63 @@ export default {
       const indexOfSelectedColor = this.colors.indexOf(color);
       color.isActive = true;
       this.colors.splice(indexOfSelectedColor, 1, color);
+      this.$store.commit("setItem", {
+        name: "Цвет",
+        value: color.text,
+      });
     },
     selectRate(rate) {
       this.rates.forEach((r) => (r.isActive = false));
       const indexOfSelectedRate = this.rates.indexOf(rate);
       rate.isActive = true;
       this.rates.splice(indexOfSelectedRate, 1, rate);
+      this.$store.commit("setItem", {
+        name: "Тариф",
+        value: rate.text,
+      });
     },
     toggleService(service) {
       const currentService = this.services.find((s) => s === service);
       currentService.isActive = !currentService.isActive;
+      if (currentService.isActive) {
+        this.$store.commit("setItem", {
+          name: service.text,
+          value: "Да",
+        });
+      } else {
+        this.$store.commit("deleteItem", {
+          name: service.text,
+        });
+      }
     },
     nextPage() {
       this.$emit("next-page");
+    },
+    calculateDateInterval(start, end) {
+      let diffInMilliSeconds = Math.abs(end - start) / 1000;
+      if (diffInMilliSeconds < 0) {
+        return { hours: null, days: null };
+      } else {
+        const hours = Math.round(diffInMilliSeconds / 3600) % 24;
+        const days = Math.round(diffInMilliSeconds / 86400);
+        return `
+         ${days === 0 ? "" : days + "д"}
+          ${hours === 0 ? "" : hours + "ч"}`;
+      }
+    },
+  },
+  watch: {
+    start() {
+      this.$store.commit("setItem", {
+        name: "Время",
+        value: this.calculateDateInterval(this.start, this.end),
+      });
+    },
+    end() {
+      this.$store.commit("setItem", {
+        name: "Время",
+        value: this.calculateDateInterval(this.start, this.end),
+      });
     },
   },
 };
