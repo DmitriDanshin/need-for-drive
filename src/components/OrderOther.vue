@@ -217,7 +217,7 @@ export default {
     calculateDateInterval(start, end) {
       let diffInMilliSeconds = Math.abs(end - start) / 1000;
       if (diffInMilliSeconds < 0) {
-        return { hours: null, days: null };
+        return "";
       } else {
         const hours = Math.round(diffInMilliSeconds / 3600) % 24;
         const days = Math.round(diffInMilliSeconds / 86400);
