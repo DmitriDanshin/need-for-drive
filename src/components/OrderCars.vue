@@ -1,118 +1,146 @@
 <template>
   <div class="cars">
-    <div>
-      <div class="cars__select">
+    <div
+      v-if="isFail"
+      class="title"
+    >
+      Не удалось подключиться к серверу.
+    </div>
+    <div v-if="!isFail">
+      <div
+        v-if="!isLoading"
+        class="cars__select"
+      >
         <div
-          v-for="carModel in carModels"
-          :key="carModel.id"
-          :class="{ active: carModel.isSelected }"
+          v-for="carCategory in carsCategories"
+          :key="carCategory.id"
+          :class="{ active: carCategory.id === selectedCarCategoryId }"
           class="cars__select__item"
         >
-          <div class="cars__select__title">{{ carModel.title }}</div>
+          <div class="cars__select__title">{{ carCategory.name }}</div>
           <input
+            :checked="carCategory.id === selectedCarCategoryId"
             type="radio"
             name="cars"
-            @change="selectCarModel(carModel.id)"
+            @change="selectCarCategory(carCategory.id)"
           />
         </div>
       </div>
+      <div
+        v-if="isLoading"
+        class="title"
+      >
+        Загрузка...
+      </div>
       <div class="cars__catalog">
-        <div class="cars__catalog__item active">
-          <div class="cars__catalog__item__title">ELANTRA</div>
-          <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
-          <div class="cars__catalog__item__car">
-            <img
-              src="../assets/cars/elantra.png"
-              alt=""
-            />
+        <div
+          v-for="car in filteredCars"
+          :key="car.id"
+          :class="{ active: car.id === selectedCarId }"
+          class="cars__catalog__item"
+          @click="selectCar(car)"
+        >
+          <div class="cars__catalog__item__title">{{ car.name }}</div>
+          <div class="cars__catalog__item__price">
+            {{ car.priceMin }} - {{ car.priceMax }}₽
           </div>
-        </div>
-        <div class="cars__catalog__item">
-          <div class="cars__catalog__item__title">i30 N</div>
-          <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
           <div class="cars__catalog__item__car">
             <img
-              src="../assets/cars/i30_n.png"
-              alt="i30 N"
-            />
-          </div>
-        </div>
-        <div class="cars__catalog__item">
-          <div class="cars__catalog__item__title">CRETA</div>
-          <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
-          <div class="cars__catalog__item__car">
-            <img
-              src="../assets/cars/creta.png"
-              alt="creta"
-            />
-          </div>
-        </div>
-        <div class="cars__catalog__item">
-          <div class="cars__catalog__item__title">ELANTRA</div>
-          <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
-          <div class="cars__catalog__item__car">
-            <img
-              src="../assets/cars/sonata.png"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="cars__catalog__item">
-          <div class="cars__catalog__item__title">SONATA</div>
-          <div class="cars__catalog__item__price">12 000 - 25 000 ₽</div>
-          <div class="cars__catalog__item__car">
-            <img
-              src="../assets/cars/sonata.png"
-              alt="SONATA"
+              :src="makeCarPath(car.thumbnail.path)"
+              :alt="car.name"
             />
           </div>
         </div>
       </div>
     </div>
-    <order-card btn-text="Дополнительно"/>
+    <order-card
+      btn-text="Дополнительно"
+      @next-page="nextPage"
+/>
   </div>
 </template>
 
 <script>
 import OrderCard from "@/components/OrderCard";
+import { APIFactory } from "@/APIFactory";
+import { mapMutations } from "vuex";
 
 export default {
   name: "OrderCars",
-  components: {OrderCard},
+  components: { OrderCard },
   data() {
     return {
-      carModels: [
-        {
-          isSelected: false,
-          title: "Все модели",
-          id: 0,
-        },
-        {
-          isSelected: false,
-          title: "Эконом",
-          id: 1,
-        },
-        {
-          isSelected: false,
-          title: "Премиум",
-          id: 2,
-        },
-      ],
-      selectedModel: "",
+      carsCategories: [],
+      selectedCarCategoryId: "",
+      selectedCarId: "",
+      cars: [],
+      isLoading: true,
+      isFail: false,
     };
   },
+  created() {
+    const API = new APIFactory();
+    const cars = API.getCars()
+      .then((car) => car.json())
+      .then((car) => {
+        const { data } = car;
+        this.cars = data;
+      })
+      .finally(() => (this.isLoading = false));
+    const categories = API.getCarsCategories()
+      .then((category) => category.json())
+      .then((category) => {
+        const { data } = category;
+        this.carsCategories = data;
+        this.selectedCarCategoryId = data[0].id;
+      });
+    Promise.all([cars, categories])
+      .catch(() => {
+        this.isFail = true;
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
+  },
   methods: {
+    ...mapMutations(["setItem", "setPrice", "setCarData"]),
     nextPage() {
       this.$emit("next-page");
     },
-    selectCarModel(id) {
-      const prevSelect = this.carModels.find((model) => model.id === id);
-      const currentSelect =
-        this.carModels.find((model) => model.isSelected) ?? prevSelect;
-      currentSelect.isSelected = false;
-      prevSelect.isSelected = true;
+    makeCarPath(path) {
+      if (path.includes("data:image")) {
+        return path;
+      } else {
+        return process.env.CAR_IMAGE_PATH + path;
+      }
     },
-  }
+    selectCarCategory(id) {
+      this.selectedCarCategoryId = id;
+    },
+    selectCar(car) {
+      this.selectedCarId = car.id;
+      this.setItem({
+        name: "Модель",
+        value: car.name,
+      });
+      this.setPrice({
+        priceMin: car.priceMin,
+        priceMax: car.priceMax,
+      });
+      this.setCarData({
+        number: car.number,
+        tank: car.tank,
+        colors: car.colors,
+      });
+    },
+  },
+  computed: {
+    filteredCars() {
+      return this.cars.filter(
+        (car) => car.categoryId?.id === this.selectedCarCategoryId
+      );
+    },
+  },
 };
 </script>
 
@@ -211,6 +239,11 @@ export default {
         margin-top: 36px;
         justify-self: flex-end;
         align-self: flex-end;
+
+        img {
+          width: 256px;
+          height: 116px;
+        }
       }
 
       &:hover {

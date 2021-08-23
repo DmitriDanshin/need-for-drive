@@ -16,7 +16,9 @@
       </div>
     </div>
     <div class="order__price">
-      <div><span>Цена:</span></div>
+      <div v-if="price.max || price.min">
+        <span>Цена: {{ price.min }} - {{ price.max }} ₽</span>
+      </div>
     </div>
     <div class="order__btn__wrapper">
       <button
@@ -46,7 +48,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
+
 export default {
   name: "OrderCard",
   props: {
@@ -73,8 +76,9 @@ export default {
     },
   },
   computed: {
-    ...mapState(['orderCardItems']),
-  }
+    ...mapState(["orderCardItems"]),
+    ...mapState(["price"]),
+  },
 };
 </script>
 
@@ -242,6 +246,7 @@ export default {
 
     &__btn {
       margin-left: 64px;
+
       &__back {
         display: block;
         margin-left: 64px;
@@ -257,7 +262,8 @@ export default {
       position: absolute;
       bottom: 10%;
       width: 100%;
-      &__button{
+
+      &__button {
         margin-left: 64px;
       }
     }
@@ -277,7 +283,6 @@ export default {
       width: 80%;
       padding-left: 0;
       padding-right: 5%;
-
     }
   }
 }
