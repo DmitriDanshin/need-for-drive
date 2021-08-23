@@ -11,7 +11,9 @@
         <button
           class="popup__button"
           @click="togglePopup"
-        >Вернуться</button>
+        >
+          Вернуться
+        </button>
       </div>
     </div>
   </div>
@@ -33,8 +35,8 @@
       >
         <div
           :class="{
-            active: page.isActive,
-            done: page.isDone && !page.isActive,
+            'active': page.isActive,
+            'done': page.isDone && !page.isActive,
           }"
           class="order__nav__item__text"
           @click="selectPage(page)"
@@ -118,7 +120,10 @@ export default {
       const nextPage = this.pages.find(
         (page) => page.id === currentPage.id + 1
       );
-      nextPage.isActive = true;
+
+      if(nextPage){
+        nextPage.isActive = true;
+      }
 
       this.currentPage = nextPage.pageName;
     },

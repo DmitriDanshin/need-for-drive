@@ -1,4 +1,4 @@
-import { createStore } from "vuex";
+import {createStore} from "vuex";
 
 export default createStore({
   state: {
@@ -14,7 +14,7 @@ export default createStore({
     },
   },
   mutations: {
-    setItem: (state, { name, value }) => {
+    setItem: (state, {name, value}) => {
       const item = state.orderCardItems.find((item) => item.name === name);
       if (item) {
         item.value = value;
@@ -25,20 +25,24 @@ export default createStore({
         });
       }
     },
-    deleteItem: (state, { name }) => {
+    deleteItem: (state, {name}) => {
       const index = state.orderCardItems.findIndex(
-        (item) => item.name === name
+          (item) => item.name === name
       );
       state.orderCardItems.splice(index, 1);
     },
-    setPrice: (state, { priceMin, priceMax }) => {
-      state.price.min = priceMin;
-      state.price.max = priceMax;
+    setPrice: (state, {priceMin, priceMax}) => {
+      state.price = {
+        min: priceMin,
+        max: priceMax,
+      };
     },
-    setCarData: (state, { number, tank, colors }) => {
-      state.carData.number = number ?? "";
-      state.carData.tank = tank ?? 0;
-      state.carData.colors = colors;
+    setCarData: (state, {number, tank, colors}) => {
+      state.carData = {
+        number: number ?? "",
+        tank: tank ?? 0,
+        colors: colors,
+      };
     },
   },
   getters: {

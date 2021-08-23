@@ -16,8 +16,8 @@
       </div>
     </div>
     <div class="order__price">
-      <div v-if="price.max || price.min">
-        <span>Цена: {{ price.min }} - {{ price.max }} ₽</span>
+      <div v-if="(price.max || price.min)">
+        <span>Цена: {{ price.min ?? 0 }} - {{ price.max ?? 0 }} ₽</span>
       </div>
     </div>
     <div class="order__btn__wrapper">
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: "OrderCard",
