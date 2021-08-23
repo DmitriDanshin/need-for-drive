@@ -56,17 +56,18 @@
     <order-card
       btn-text="Дополнительно"
       @next-page="nextPage"
-    />
+/>
   </div>
 </template>
 
 <script>
 import OrderCard from "@/components/OrderCard";
-import {APIFactory} from "@/APIFactory";
+import { APIFactory } from "@/APIFactory";
+import { mapMutations } from "vuex";
 
 export default {
   name: "OrderCars",
-  components: {OrderCard},
+  components: { OrderCard },
   data() {
     return {
       carsCategories: [],
@@ -77,29 +78,32 @@ export default {
       isFail: false,
     };
   },
-  async created() {
+  created() {
     const API = new APIFactory();
-    try {
-      const {data} = await API.getCars();
-      this.cars = data;
-      this.isLoading = false;
-    } catch (e) {
-      this.isFail = true;
-      this.cars = [];
-      this.isLoading = false;
-    }
-    try {
-      const {data} = await API.getCarsCategories();
-      this.carsCategories = data;
-      this.selectedCarCategoryId = data[0].id;
-      this.isLoading = false;
-    } catch (e) {
-      this.isFail = true;
-      this.carsCategories = [];
-      this.isLoading = false;
-    }
+    const cars = API.getCars()
+      .then((car) => car.json())
+      .then((car) => {
+        const { data } = car;
+        this.cars = data;
+      })
+      .finally(() => (this.isLoading = false));
+    const categories = API.getCarsCategories()
+      .then((category) => category.json())
+      .then((category) => {
+        const { data } = category;
+        this.carsCategories = data;
+        this.selectedCarCategoryId = data[0].id;
+      });
+    Promise.all([cars, categories])
+      .catch(() => {
+        this.isFail = true;
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   },
   methods: {
+    ...mapMutations(["setItem", "setPrice", "setCarData"]),
     nextPage() {
       this.$emit("next-page");
     },
@@ -107,7 +111,7 @@ export default {
       if (path.includes("data:image")) {
         return path;
       } else {
-        return 'https://api-factory.simbirsoft1.com' + path;
+        return process.env.CAR_IMAGE_PATH + path;
       }
     },
     selectCarCategory(id) {
@@ -115,15 +119,15 @@ export default {
     },
     selectCar(car) {
       this.selectedCarId = car.id;
-      this.$store.commit("setItem", {
+      this.setItem({
         name: "Модель",
         value: car.name,
       });
-      this.$store.commit("setPrice", {
+      this.setPrice({
         priceMin: car.priceMin,
         priceMax: car.priceMax,
       });
-      this.$store.commit("setCarData", {
+      this.setCarData({
         number: car.number,
         tank: car.tank,
         colors: car.colors,

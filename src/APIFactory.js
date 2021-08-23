@@ -1,4 +1,4 @@
-const KEY = "5e25c641099b810b946c5d5b";
+const KEY = process.env.VUE_APP_API;
 
 export class APIFactory {
   init = {
@@ -7,10 +7,10 @@ export class APIFactory {
   };
 
   async getCars() {
-    return await fetch("/car", this.init).then((r) => r.json());
+    return await fetch("/car", this.init);
   }
 
   async getCarsCategories() {
-    return await fetch("/category", this.init).then((r) => r.json());
+    return await fetch("/category", this.init);
   }
 }
