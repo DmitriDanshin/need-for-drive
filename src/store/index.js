@@ -3,13 +3,16 @@ import {createStore} from "vuex";
 export default createStore({
   state: {
     orderCardItems: [],
+    isDone: false,
     price: {
       min: 0,
       max: 0,
     },
     carData: {
-      number: "",
-      tank: 0,
+      name: "Hyndai, i30 N",
+      number: "K 761 HA 73",
+      dateFrom: "12.06.2019 12:00",
+      tank: 100,
       colors: [],
     },
   },
@@ -37,12 +40,18 @@ export default createStore({
         max: priceMax,
       };
     },
-    setCarData: (state, {number, tank, colors}) => {
+    setCarData: (state, {number, tank, colors, name, dateFrom}) => {
+      const carData = state.carData;
       state.carData = {
-        number: number ?? "",
-        tank: tank ?? 0,
-        colors: colors,
+        number: number ?? carData.number,
+        tank: tank ?? carData.tank,
+        colors: colors ?? carData.colors,
+        name: name ?? carData.name,
+        dateFrom: dateFrom ?? carData.dateFrom
       };
+    },
+    setOrderState: (state, {orderState}) => {
+      state.isDone = orderState;
     },
   },
   getters: {
@@ -55,6 +64,9 @@ export default createStore({
         max: state.price.max,
       };
     },
+    car(state) {
+      return state.carData;
+    }
   },
   actions: {},
   modules: {},

@@ -2,16 +2,16 @@
   <div class="total">
     <div class="total__wrapper">
       <div class="total__info">
-        <div class="total__info__name">Hyndai, i30 N</div>
-        <div class="total__info__license">K 761 HA 73</div>
+        <div class="total__info__name">{{ car.name }}</div>
+        <div class="total__info__license">{{ car.number }}</div>
         <div class="total__info__items">
           <div class="total__info__item">
             <div class="total__info__item__name">Топливо</div>
-            <div class="total__info__item__value">100%</div>
+            <div class="total__info__item__value">{{ car.tank }} %</div>
           </div>
           <div class="total__info__item">
             <div class="total__info__item__name">Доступна с</div>
-            <div class="total__info__item__value">12.06.2019 12:00</div>
+            <div class="total__info__item__value">{{ car.dateFrom }}</div>
           </div>
         </div>
       </div>
@@ -22,16 +22,28 @@
         />
       </div>
     </div>
-    <order-card/>
+    <order-card
+      @open-popup="openPopup"
+      btn-text="Заказать"
+    />
   </div>
 </template>
 
 <script>
 import OrderCard from "@/components/OrderCard";
+import {mapGetters} from "vuex";
 
 export default {
   name: "OrderTotal",
   components: {OrderCard},
+  methods: {
+    openPopup() {
+      this.$emit('open-popup');
+    }
+  },
+  computed: {
+    ...mapGetters(["car"])
+  }
 };
 </script>
 

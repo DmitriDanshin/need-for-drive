@@ -7,7 +7,12 @@
     <div class="popup__wrapper">
       <div class="popup__msg">Подтвердить заказ</div>
       <div class="popup__buttons">
-        <button class="popup__button">Подтвердить</button>
+        <button
+          class="popup__button"
+          @click="acceptOrder"
+        >
+          Подтвердить
+        </button>
         <button
           class="popup__button"
           @click="togglePopup"
@@ -22,7 +27,7 @@
       <h2 class="order__header__title title fz-30">Need for drive</h2>
       <div class="order__header__city">
         <div class="order__header__city-icon">
-          <v-svg name="city-icon" />
+          <v-svg name="city-icon"/>
         </div>
         <span class="order__header__city-title">Ульяновск</span>
       </div>
@@ -43,12 +48,13 @@
         >
           {{ page.title }}
         </div>
-        <v-svg name="next-arrow" />
+        <v-svg name="next-arrow"/>
       </div>
     </div>
     <component
       :is="currentPage"
       @next-page="nextPage"
+      @open-popup="togglePopup"
     />
   </section>
 </template>
@@ -59,10 +65,11 @@ import VSvg from "@/components/v-svg";
 import OrderOther from "@/components/OrderOther";
 import OrderCars from "@/components/OrderCars";
 import OrderTotal from "@/components/OrderTotal";
+import {mapMutations} from "vuex";
 
 export default {
   name: "OrderPage",
-  components: { OrderTotal, OrderCars, VSvg, OrderLocation, OrderOther },
+  components: {OrderTotal, OrderCars, VSvg, OrderLocation, OrderOther},
   data() {
     return {
       isPopupOpen: false,
@@ -100,6 +107,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['setOrderState']),
     selectPage(page) {
       if (page.isDone) {
         const activePage = this.pages.find((page) => page.isActive);
@@ -121,7 +129,7 @@ export default {
         (page) => page.id === currentPage.id + 1
       );
 
-      if(nextPage){
+      if (nextPage) {
         nextPage.isActive = true;
       }
 
@@ -130,6 +138,12 @@ export default {
     togglePopup() {
       this.isPopupOpen = !this.isPopupOpen;
     },
+    acceptOrder() {
+      this.togglePopup();
+      this.setOrderState({
+        orderState: true
+      });
+    }
   },
 };
 </script>

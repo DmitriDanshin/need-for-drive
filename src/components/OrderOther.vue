@@ -178,7 +178,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['setItem', 'deleteItem']),
+    ...mapMutations(['setItem', 'deleteItem', 'setCarData']),
     selectColor(color) {
       this.colors.forEach((c) => (c.isActive = false));
       const indexOfSelectedColor = this.colors.indexOf(color);
@@ -231,6 +231,9 @@ export default {
   },
   watch: {
     start() {
+      this.setCarData({
+        dateFrom: this.start.toLocaleString()
+      });
       this.setItem({
         name: "Время",
         value: this.calculateDateInterval(this.start, this.end),

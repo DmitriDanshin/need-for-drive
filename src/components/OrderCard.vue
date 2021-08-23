@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapMutations, mapState} from "vuex";
 
 export default {
   name: "OrderCard",
@@ -68,10 +68,14 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['setOrderState']),
     toggleMobileOrder() {
       this.isMobileOrder = !this.isMobileOrder;
     },
     nextPage() {
+      if (this.btnText === 'Заказать') {
+        this.$emit('open-popup');
+      }
       this.$emit("next-page");
     },
   },
