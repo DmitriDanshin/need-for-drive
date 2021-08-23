@@ -116,11 +116,12 @@
 
 <script>
 import OrderCard from "@/components/OrderCard";
-import { DatePicker } from "v-calendar";
+import {DatePicker} from "v-calendar";
+import {mapMutations} from "vuex";
 
 export default {
   name: "OrderOther",
-  components: { OrderCard, DatePicker },
+  components: {OrderCard, DatePicker},
   data() {
     return {
       colors: [
@@ -177,6 +178,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['setItem']),
     selectColor(color) {
       this.colors.forEach((c) => (c.isActive = false));
       const indexOfSelectedColor = this.colors.indexOf(color);
@@ -229,13 +231,13 @@ export default {
   },
   watch: {
     start() {
-      this.$store.commit("setItem", {
+      this.setItem({
         name: "Время",
         value: this.calculateDateInterval(this.start, this.end),
       });
     },
     end() {
-      this.$store.commit("setItem", {
+      this.setItem({
         name: "Время",
         value: this.calculateDateInterval(this.start, this.end),
       });
