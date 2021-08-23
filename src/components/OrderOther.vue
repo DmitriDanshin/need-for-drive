@@ -178,13 +178,13 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['setItem']),
+    ...mapMutations(['setItem', 'deleteItem']),
     selectColor(color) {
       this.colors.forEach((c) => (c.isActive = false));
       const indexOfSelectedColor = this.colors.indexOf(color);
       color.isActive = true;
       this.colors.splice(indexOfSelectedColor, 1, color);
-      this.$store.commit("setItem", {
+      this.setItem({
         name: "Цвет",
         value: color.text,
       });
@@ -194,7 +194,7 @@ export default {
       const indexOfSelectedRate = this.rates.indexOf(rate);
       rate.isActive = true;
       this.rates.splice(indexOfSelectedRate, 1, rate);
-      this.$store.commit("setItem", {
+      this.setItem({
         name: "Тариф",
         value: rate.text,
       });
@@ -203,12 +203,12 @@ export default {
       const currentService = this.services.find((s) => s === service);
       currentService.isActive = !currentService.isActive;
       if (currentService.isActive) {
-        this.$store.commit("setItem", {
+        this.setItem({
           name: service.text,
           value: "Да",
         });
       } else {
-        this.$store.commit("deleteItem", {
+        this.deleteItem({
           name: service.text,
         });
       }
@@ -225,7 +225,7 @@ export default {
         const days = Math.round(diffInMilliSeconds / 86400);
         return `
          ${days === 0 ? "" : days + "д"}
-          ${hours === 0 ? "" : hours + "ч"}`;
+         ${hours === 0 ? "" : hours + "ч"}`;
       }
     },
   },
